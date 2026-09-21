@@ -365,74 +365,67 @@ a   { color: inherit; text-decoration: none; }
 }
 
 /* =========================================================
-   IMAGE RÉVÉLÉE AU SCROLL
-   → Largeur : 90 % du conteneur (marge de 5 % de chaque côté)
-   → Révélation de GAUCHE à DROITE
-   → Collée au bas de la section (aucun espace avant la bleue)
+   EFFET PARALLAXE
+   → Le cadre rectangulaire reste fixe.
+   → L'image à l'intérieur est plus grande que le cadre
+     et glisse verticalement pendant le scroll, révélant
+     différentes parties du visuel à travers la "fenêtre".
    ========================================================= */
-.ira-reveal{
-  /* marge horizontale portée par le conteneur : 5 % de chaque côté
-     → l'image occupe donc 90 % de la largeur */
+.ira-parallax{
   margin-top: clamp(3.5rem, 8vw, 6rem);
   margin-bottom: 0;
   padding-bottom: 0;
-  /* padding de 5 % à gauche/droite : équivalent visuel d'une marge
-     de 5 % "de la longueur" de chaque côté */
-  padding-left: 5%;
-  padding-right: 5%;
   display: flex;
   justify-content: center;
+  /* Marges de 5 % de chaque côté → cadre = 90 % de la largeur */
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
-.ira-reveal__mask{
+.ira-parallax__window{
   position: relative;
-  width: 100%;                    /* = 90 % du parent (5 % de marge de chaque côté) */
-  aspect-ratio: 2.4 / 1;          /* rectangle panoramique proche de 8 cm × 3,7 cm */
-  max-height: 460px;              /* garde-fou pour les très grands écrans */
-  overflow: hidden;
-  border-radius: 4px 4px 0 0;     /* pas de coins bas : collé à la section bleue */
+  width: 100%;                   /* 90 % du parent */
+  height: 460px;                 /* hauteur fixe du "cadre" (fenêtre) */
+  overflow: hidden;              /* ← on ne voit que la partie de l'image dans le cadre */
+  border-radius: 4px 4px 0 0;    /* coins bas droits (collé à la section bleue) */
   background: #e6e1d8;
-
-  /* --p : 0 = fermé (aucune image), 1 = ouvert (image complète) */
-  --p: 1;
-
-  /* Rideau horizontal : révèle l'image de GAUCHE à DROITE */
-  clip-path: inset(0 calc((1 - var(--p)) * 100%) 0 0);
-  will-change: clip-path;
 }
 
-.ira-reveal__mask img{
+/* L'image est plus grande que le cadre : on la rend plus haute
+   que le conteneur, et on la fait glisser verticalement. */
+.ira-parallax__window img{
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 100%;
+  /* 165 % de la hauteur du cadre → il y a de la marge pour glisser */
+  height: 165%;
   object-fit: cover;
   object-position: center;
-  transform: scale(calc(1.08 - 0.08 * var(--p)));
-  transform-origin: center center;
+  /* --shift : 0 (haut) → 1 (bas) — piloté par le scroll */
+  transform: translate3d(0, calc(var(--shift, 0) * -35%), 0);
   will-change: transform;
 }
 
-/* Sur mobile : pleine largeur, aucun padding latéral, ratio natif respecté */
 @media (max-width: 720px){
-  .ira-reveal{
+  .ira-parallax{
     padding-left: 0;
     padding-right: 0;
   }
-  .ira-reveal__mask{
-    width: 100%;
-    aspect-ratio: 1920 / 1948;
-    max-height: none;
+  .ira-parallax__window{
+    height: 320px;
     border-radius: 4px 4px 0 0;
+  }
+  .ira-parallax__window img{
+    height: 155%;
   }
 }
 
 @media (prefers-reduced-motion: reduce){
-  .ira-reveal__mask{
-    clip-path: none !important;
-    --p: 1 !important;
+  .ira-parallax__window img{
+    height: 100% !important;
+    transform: none !important;
   }
-  .ira-reveal__mask img{ transform: none !important; }
 }
 
 /* =========================================================
@@ -648,7 +641,7 @@ a   { color: inherit; text-decoration: none; }
   </div>
 </section>
 
-<!-- 2.3 — EXPERTISES + IMAGE RÉVÉLÉE -->
+<!-- 2.3 — EXPERTISES + PARALLAXE -->
 <section class="ira-expertise" id="expertises">
   <div class="ira-wrap">
 
@@ -705,12 +698,14 @@ a   { color: inherit; text-decoration: none; }
     </div>
 
     <!-- =====================================================
-         IMAGE RÉVÉLÉE AU SCROLL
-         → largeur 90 % (marge de 5 % de chaque côté)
-         → révélation de GAUCHE à DROITE
+         EFFET PARALLAXE
+         Cadre fixe de 90 % de largeur / 460 px de haut.
+         L'image (165 % de la hauteur du cadre) glisse
+         verticalement au scroll → on voit différentes parties
+         du visuel à travers la "fenêtre".
          ===================================================== -->
-    <div class="ira-reveal" aria-hidden="true">
-      <div class="ira-reveal__mask">
+    <div class="ira-parallax" aria-hidden="true">
+      <div class="ira-parallax__window">
         <img src="/images/women-working.jpg"
              alt=""
              loading="lazy"
@@ -811,10 +806,20 @@ a   { color: inherit; text-decoration: none; }
       .catch(function () {});
   });
 
-  /* Révélation au scroll — rideau de gauche à droite */
+  /* =========================================================
+     EFFET PARALLAXE
+     ---------------------------------------------------------
+     On calcule la position du cadre dans la fenêtre à chaque
+     scroll, et on en déduit un pourcentage `--shift` (0 → 1).
+     L'image à l'intérieur est alors translatée en Y de
+     -35 % à 0 % de sa propre hauteur : elle "traverse" la
+     fenêtre pendant que l'utilisateur scrolle.
+     ========================================================= */
   (function () {
-    const masks = document.querySelectorAll('.ira-reveal__mask');
-    if (!masks.length) return;
+    const windows = document.querySelectorAll('.ira-parallax__window');
+    if (!windows.length) return;
+
+    // Respect de la préférence "mouvement réduit"
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     let ticking = false;
@@ -822,16 +827,22 @@ a   { color: inherit; text-decoration: none; }
     function update() {
       const wh = window.innerHeight;
 
-      masks.forEach(function (el) {
+      windows.forEach(function (el) {
         const rect = el.getBoundingClientRect();
-        const start = wh;
-        const end   = wh * 0.35;
 
-        let p = (start - rect.top) / (start - end);
-        p = Math.max(0, Math.min(1, p));
-        p = p * (2 - p); // easeOutQuad
+        // p = 0 quand le cadre entre par le bas de la fenêtre
+        // p = 1 quand le cadre a complètement traversé le haut
+        // On mappe sur [ (wh + height) → 0 ] pour une course complète
+        const total = wh + rect.height;
+        const progress = (wh - rect.top) / total;   // 0 → 1 sur toute la traversée
 
-        el.style.setProperty('--p', p);
+        // On ne garde que la plage utile (visible à l'écran)
+        let p = Math.max(0, Math.min(1, progress));
+
+        // easeInOutSine pour un mouvement fluide et symétrique
+        p = 0.5 - 0.5 * Math.cos(Math.PI * p);
+
+        el.style.setProperty('--shift', p);
       });
 
       ticking = false;
