@@ -5,42 +5,134 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>IRA — Impact Research &amp; Advisory</title>
 
-<!-- ===== Google Fonts : Playball ===== -->
+<!-- ===== Google Fonts : DM Serif Display + Playball + Lexend ===== -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playball&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Playball&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
 
 <style>
 /* =========================================================
-   IRA — HERO
+   IRA — GLOBAL
    ========================================================= */
 
 *, *::before, *::after { box-sizing: border-box; }
 
 :root{
   --ira-bg:     #f7f4ef;
+  --ira-bg-alt: #ffffff;
   --ira-ink:    #101c2c;
-  --ira-accent: #d9542f;
-  --ira-green:  #0a2e0a;   /* vert très foncé, proche du noir */
+  --green:      #2c7a3e;
+  --night:      #0f1e3d;
+  --ira-green:  #0a2e0a;
+  --ira-muted:  #5b6472;
+  --ira-line:   #e6e1d8;
+  --ira-radius: 6px;
+  --ira-max:    1200px;
 }
+
+html { scroll-behavior: smooth; }
 
 body{
   margin: 0;
   background: var(--ira-bg);
   color: var(--ira-ink);
-  font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Lexend", "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-/* ---------- classe Playball (fournie) ---------- */
-.playball-regular {
-  font-family: "Playball", cursive;
+img { max-width: 100%; display: block; }
+a   { color: inherit; text-decoration: none; }
+
+.playball-regular { font-family: "Playball", cursive; font-weight: 400; font-style: normal; }
+.dm-serif-display-regular { font-family: "DM Serif Display", serif; font-weight: 400; font-style: normal; }
+.dm-serif-display-regular-italic { font-family: "DM Serif Display", serif; font-weight: 400; font-style: italic; }
+
+.lexend-body {
+  font-family: "Lexend", sans-serif;
+  font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
 }
 
-/* ---------- coquille du hero ---------- */
+.ira-wrap{
+  width: min(100% - 40px, var(--ira-max));
+  margin-inline: auto;
+}
+
+/* ---------- boutons ---------- */
+.ira-btn{
+  display: inline-flex;
+  align-items: center;
+  gap: .55em;
+  padding: 1rem 1.7rem;
+  border-radius: var(--ira-radius);
+  font-family: "Lexend", sans-serif;
+  font-weight: 500;
+  font-size: .95rem;
+  letter-spacing: .01em;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: transform .2s ease, background-color .25s ease, color .25s ease, border-color .25s ease;
+  white-space: nowrap;
+}
+.ira-btn:hover { transform: translateY(-2px); }
+
+.ira-btn--primary{
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+}
+.ira-btn--primary:hover{
+  background: var(--night);
+  border-color: var(--night);
+}
+
+.ira-btn--ghost{
+  background: transparent;
+  color: var(--night);
+  border-color: var(--night);
+}
+.ira-btn--ghost:hover{
+  background: var(--night);
+  color: #fff;
+}
+
+.ira-btn--light{
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255,255,255,.7);
+}
+.ira-btn--light:hover{
+  background: #fff;
+  color: var(--green);
+}
+
+/* ---------- titres ---------- */
+.ira-title{
+  font-family: "Lexend", sans-serif;
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  line-height: 1.15;
+  font-weight: 600;
+  margin: 0 0 1rem;
+  letter-spacing: -.02em;
+  color: var(--night);
+}
+
+.ira-lead{
+  font-family: "Lexend", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: var(--ira-muted);
+  max-width: 62ch;
+  margin: 0;
+}
+
+/* =========================================================
+   HERO (fourni — inchangé)
+   ========================================================= */
 .ira-hero{
   display: flex;
   justify-content: center;
@@ -50,44 +142,37 @@ body{
     clamp(110px, 13vw, 180px);
 }
 
-/* ---------- scène : les 2 visuels collés ---------- */
 .ira-hero__stage{
   container-type: inline-size;
   display: flex;
-  align-items: flex-end;          /* bas des deux colonnes alignés */
+  align-items: flex-end;
   justify-content: center;
-  gap: 0;                         /* AUCUN espace entre les images */
+  gap: 0;
   width: min(100%, 900px);
 }
 
-/* ---------- colonnes ---------- */
 .ira-hero__col{
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
 
-/* Colonne gauche : texte + image 1
-   → le décalage vers le bas est porté par la COLONNE,
-     ce qui laisse la position de l’image identique à avant. */
 .ira-hero__col--left{
-  flex: 0 0 37.8%;                              /* 340 / 900 */
-  gap: .45em;                                   /* espace texte ↔ image */
-  transform: translateY(clamp(28px, 6.6cqw, 60px));  /* ← décalage conservé */
+  flex: 0 0 37.8%;
+  gap: .45em;
+  transform: translateY(clamp(28px, 6.6cqw, 60px));
 }
 
-/* Colonne droite : image 2 + texte */
 .ira-hero__col--right{
   flex: 1 1 auto;
   gap: .65em;
 }
 
-/* ---------- visuels ---------- */
 .ira-shot{
   position: relative;
   margin: 0;
   overflow: hidden;
-  background: #e6e1d8;            /* placeholder pendant le chargement */
+  background: #e6e1d8;
 }
 
 .ira-shot img{
@@ -97,14 +182,12 @@ body{
   object-fit: cover;
 }
 
-/* --- image 1 : ingénieure (reste plus basse) --- */
 .ira-shot--left{
   width: 100%;
-  aspect-ratio: 1432 / 1920;      /* ratio natif respecté */
+  aspect-ratio: 1432 / 1920;
   border-radius: 3px 0 0 3px;
 }
 
-/* --- trait de liaison entre les deux images --- */
 .ira-shot--left::after{
   content: "";
   position: absolute;
@@ -112,124 +195,729 @@ body{
   width: 2px;
   background: linear-gradient(
     to bottom,
-    rgba(217, 84, 47, 0)    0%,
-    rgba(217, 84, 47, .85) 32%,
-    var(--ira-accent)     100%
+    rgba(44, 122, 62, 0)    0%,
+    rgba(44, 122, 62, .85) 32%,
+    var(--green)          100%
   );
   pointer-events: none;
 }
 
-/* --- image 2 : ouvriers / mise en œuvre --- */
 .ira-shot--right{
   width: 100%;
   aspect-ratio: 4 / 3;
   border-radius: 0 3px 3px 0;
 }
 
-/* ---------- textes (Playball) ---------- */
 .ira-line{
   margin: 0;
-  font-family: "Playball", cursive;
+  font-family: "DM Serif Display", serif;
   font-weight: 400;
   font-style: normal;
   color: #000000;
   line-height: 1.12;
   letter-spacing: 0;
-  /* +5 % par rapport à la version précédente */
-  font-size: clamp(21px, 3.8cqw, 36px);
+  font-size: clamp(22.7px, 4.1cqw, 38.9px);
 }
 
-/* Texte du bas : vert foncé + léger décalage vers la droite */
 .ira-line--bottom{
   color: var(--ira-green);
-  padding-left: 0.6em;   /* pousse le texte vers la droite */
+  padding-left: 0.6em;
+}
+
+@media (max-width: 720px){
+  .ira-hero__stage{ flex-direction: column; align-items: stretch; }
+  .ira-hero__col--left,
+  .ira-hero__col--right{ flex: 0 0 auto; width: 100%; }
+  .ira-hero__col--left{ transform: none; }
+  .ira-shot--left{ aspect-ratio: 4 / 5; border-radius: 3px 3px 0 0; }
+  .ira-shot--left::after{
+    top: auto; left: 0; right: 0; bottom: 0;
+    width: auto; height: 2px;
+    background: linear-gradient(
+      to right,
+      rgba(44, 122, 62, 0)    0%,
+      rgba(44, 122, 62, .85) 60%,
+      var(--green)          100%
+    );
+  }
+  .ira-shot--right{ border-radius: 0 0 3px 3px; }
+  .ira-line{ font-size: clamp(27px, 8vw, 38.9px); }
 }
 
 /* =========================================================
-   RESPONSIVE — sous 720px on empile
+   2.1 — SECTION D'OUVERTURE
    ========================================================= */
+.ira-intro{
+  background: var(--ira-bg-alt);
+  padding: clamp(60px, 9vw, 120px) 0;
+  border-top: 1px solid var(--ira-line);
+}
+.ira-intro__inner{
+  max-width: 880px;
+  margin-inline: auto;
+  text-align: center;
+}
+.ira-intro__text{
+  font-family: "Lexend", sans-serif;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  line-height: 1.6;
+  font-weight: 300;
+  color: var(--ira-ink);
+  margin: 0 0 2.2rem;
+}
+.ira-intro__text strong{
+  font-weight: 500;
+  color: var(--green);
+}
+.ira-intro__cta{
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* =========================================================
+   2.2 — POURQUOI IRA
+   ========================================================= */
+.ira-why{
+  background: var(--ira-bg);
+  padding: clamp(70px, 10vw, 130px) 0;
+}
+.ira-why__grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+}
+.ira-why__card{
+  background: var(--ira-bg-alt);
+  border: 1px solid var(--ira-line);
+  border-radius: var(--ira-radius);
+  padding: 2rem 1.6rem;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.ira-why__card:hover{
+  transform: translateY(-4px);
+  border-color: var(--green);
+  box-shadow: 0 18px 40px -22px rgba(15,30,61,.25);
+}
+.ira-why__icon{
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: rgba(44,122,62,.08);
+  color: var(--green);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.3rem;
+}
+.ira-why__icon svg{ width: 26px; height: 26px; }
+.ira-why__card h3{
+  font-family: "Lexend", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 500;
+  margin: 0 0 .7rem;
+  letter-spacing: -.01em;
+  color: var(--night);
+}
+.ira-why__card p{
+  font-family: "Lexend", sans-serif;
+  font-size: .9rem;
+  font-weight: 300;
+  color: var(--ira-muted);
+  margin: 0;
+}
+
+@media (max-width: 1024px){
+  .ira-why__grid{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px){
+  .ira-why__grid{ grid-template-columns: 1fr; gap: 1.2rem; }
+}
+
+/* =========================================================
+   2.3 — EXPERTISES (teaser)
+   → padding-bas = 0 pour coller directement la section bleue
+   ========================================================= */
+.ira-expertise{
+  background: var(--ira-bg-alt);
+  padding: clamp(70px, 10vw, 130px) 0 0;
+  border-top: 1px solid var(--ira-line);
+}
+.ira-expertise__head{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+.ira-expertise__list{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2rem;
+}
+.ira-exp-item{
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  padding: 1.6rem 1.7rem;
+  border: 1px solid var(--ira-line);
+  border-radius: var(--ira-radius);
+  background: var(--ira-bg);
+  transition: border-color .25s ease, transform .25s ease, background .25s ease;
+}
+.ira-exp-item:hover{
+  border-color: var(--green);
+  transform: translateX(4px);
+  background: #fff;
+}
+.ira-exp-item__num{
+  font-family: "DM Serif Display", serif;
+  font-size: 1.7rem;
+  color: var(--green);
+  line-height: 1;
+  min-width: 38px;
+}
+.ira-exp-item__body h3{
+  font-family: "Lexend", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0 0 .35rem;
+  color: var(--night);
+}
+.ira-exp-item__body p{
+  font-family: "Lexend", sans-serif;
+  font-size: .88rem;
+  font-weight: 300;
+  color: var(--ira-muted);
+  margin: 0;
+}
+.ira-expertise__cta{
+  margin-top: 2.6rem;
+}
+
+@media (max-width: 820px){
+  .ira-expertise__list{ grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   IMAGE RÉVÉLÉE AU SCROLL
+   → colonne verticale étroite (3,7 cm), révélée du haut vers le bas
+   → collée au bas de la section (aucun espace avant la bleue)
+   ========================================================= */
+.ira-reveal{
+  margin-top: clamp(3.5rem, 8vw, 6rem);
+  margin-bottom: 0;
+  padding-bottom: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.ira-reveal__mask{
+  position: relative;
+  width: 3.7cm;                   /* ← bande verticale étroite */
+  aspect-ratio: 3 / 5;            /* ← rectangle vertical */
+  overflow: hidden;
+  border-radius: 4px 4px 0 0;     /* pas de coins bas (fond collé à la section bleue) */
+  background: #e6e1d8;
+
+  /* --p : 0 = fermé (aucune image visible), 1 = ouvert (image complète) */
+  --p: 1;
+
+  /* Rideau qui descend : révèle l'image du haut vers le bas */
+  clip-path: inset(0 0 calc((1 - var(--p)) * 100%) 0);
+  will-change: clip-path;
+}
+
+.ira-reveal__mask img{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(calc(1.12 - 0.12 * var(--p)));
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* Sur mobile : pleine largeur, ratio d'origine respecté */
 @media (max-width: 720px){
-
-  .ira-hero__stage{
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .ira-hero__col--left,
-  .ira-hero__col--right{
-    flex: 0 0 auto;
+  .ira-reveal__mask{
     width: 100%;
+    aspect-ratio: 1920 / 1948;
+    border-radius: 4px 4px 0 0;
   }
+}
 
-  /* plus de décalage vertical une fois empilé */
-  .ira-hero__col--left{
-    transform: none;
+@media (prefers-reduced-motion: reduce){
+  .ira-reveal__mask{
+    clip-path: none !important;
+    --p: 1 !important;
   }
+  .ira-reveal__mask img{ transform: none !important; }
+}
 
-  .ira-shot--left{
-    aspect-ratio: 4 / 5;
-    border-radius: 3px 3px 0 0;
-  }
+/* =========================================================
+   2.4 — APPROCHE
+   ========================================================= */
+.ira-approach{
+  position: relative;
+  padding: clamp(80px, 11vw, 150px) 0;
+  background: var(--night);
+  color: #fff;
+  overflow: hidden;
+}
+.ira-approach::before{
+  content: "";
+  position: absolute; inset: 0;
+  /* ↓↓↓ REMPLACEZ cette image ↓↓↓ */
+  background-image: url('/images/ira-workshop.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: .15;
+  z-index: 0;
+}
+.ira-approach__inner{
+  position: relative;
+  z-index: 1;
+}
+.ira-approach .ira-title{ color: #fff; }
+.ira-approach .ira-lead{ color: rgba(255,255,255,.75); }
 
-  /* le trait devient horizontal, sous la 1re image */
-  .ira-shot--left::after{
-    top: auto; left: 0; right: 0; bottom: 0;
-    width: auto;
-    height: 2px;
-    background: linear-gradient(
-      to right,
-      rgba(217, 84, 47, 0)    0%,
-      rgba(217, 84, 47, .85) 60%,
-      var(--ira-accent)     100%
-    );
-  }
+.ira-approach__grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+}
+.ira-approach__card{
+  padding: 2rem 1.8rem;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: var(--ira-radius);
+  background: rgba(255,255,255,.03);
+  transition: border-color .25s ease, background .25s ease, transform .25s ease;
+}
+.ira-approach__card:hover{
+  border-color: var(--green);
+  background: rgba(44,122,62,.12);
+  transform: translateY(-4px);
+}
+.ira-approach__card .ira-why__icon{
+  background: rgba(44,122,62,.22);
+  color: #8fd49e;
+}
+.ira-approach__card h3{
+  font-family: "Lexend", sans-serif;
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin: 0 0 .6rem;
+}
+.ira-approach__card p{
+  font-family: "Lexend", sans-serif;
+  font-size: .9rem;
+  font-weight: 300;
+  color: rgba(255,255,255,.75);
+  margin: 0;
+}
+.ira-approach__link{
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  margin-top: 2.8rem;
+  font-family: "Lexend", sans-serif;
+  font-weight: 500;
+  font-size: .95rem;
+  color: #fff;
+  border-bottom: 1.5px solid var(--green);
+  padding-bottom: .25rem;
+  transition: gap .25s ease, color .25s ease;
+}
+.ira-approach__link:hover{
+  gap: .9rem;
+  color: #8fd49e;
+}
+.ira-approach__link svg{ width: 16px; height: 16px; }
 
-  .ira-shot--right{
-    border-radius: 0 0 3px 3px;
-  }
+@media (max-width: 900px){
+  .ira-approach__grid{ grid-template-columns: 1fr; gap: 1.2rem; }
+}
 
-  /* +5 % également sur mobile */
-  .ira-line{
-    font-size: clamp(25px, 7.4vw, 36px);
-  }
+/* =========================================================
+   2.6 — APPEL FINAL
+   ========================================================= */
+.ira-final{
+  background: var(--green);
+  color: #fff;
+  padding: clamp(70px, 10vw, 120px) 0;
+  text-align: center;
+}
+.ira-final__inner{
+  max-width: 760px;
+  margin-inline: auto;
+}
+.ira-final h2{
+  font-family: "Lexend", sans-serif;
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  line-height: 1.2;
+  font-weight: 600;
+  margin: 0 0 1.2rem;
+  letter-spacing: -.02em;
+}
+.ira-final p{
+  font-family: "Lexend", sans-serif;
+  font-size: 1.02rem;
+  font-weight: 300;
+  color: rgba(255,255,255,.9);
+  margin: 0 0 2.2rem;
+}
+.ira-final .ira-btn--light{ border-color: #fff; }
+.ira-final .ira-btn--light:hover{
+  background: #fff;
+  color: var(--green);
 }
 </style>
 </head>
 
 <body>
 
+<!-- =========================================================
+     HEADER — appelé depuis /components/header.html
+     ========================================================= -->
+<div id="site-header"></div>
+
+<!-- =========================================================
+     HERO
+     ========================================================= -->
 <section class="ira-hero">
   <div class="ira-hero__stage">
 
-    <!-- COLONNE GAUCHE : « Des preuves solides » + image 1 -->
     <div class="ira-hero__col ira-hero__col--left">
-
-      <p class="ira-line playball-regular">Des preuves solides</p>
-
+      <p class="ira-line dm-serif-display-regular">Des preuves solides</p>
       <figure class="ira-shot ira-shot--left">
         <img src="/images/woman-engineer.jpg"
              alt="Ingénieure IRA sur le terrain"
              width="1432" height="1920">
       </figure>
-
     </div>
 
-    <!-- COLONNE DROITE : image 2 + « pour des décisions qui comptent. » -->
     <div class="ira-hero__col ira-hero__col--right">
-
       <figure class="ira-shot ira-shot--right">
         <img src="/images/workers-implementation.jpg"
              alt="Équipe de mise en œuvre sur le terrain">
       </figure>
-
-      <p class="ira-line ira-line--bottom playball-regular">
+      <p class="ira-line ira-line--bottom dm-serif-display-regular">
         pour des décisions qui comptent.
       </p>
-
     </div>
 
   </div>
 </section>
+
+<!-- =========================================================
+     2.1 — SECTION D'OUVERTURE
+     ========================================================= -->
+<section class="ira-intro" id="a-propos">
+  <div class="ira-wrap">
+    <div class="ira-intro__inner">
+      <p class="ira-intro__text">
+        IRA accompagne <strong>institutions publiques, bailleurs de fonds, ONG et entreprises</strong>
+        dans la production et l'usage de preuves rigoureuses : recherche appliquée,
+        évaluation d'impact et conseil stratégique en République Démocratique du Congo
+        et en Afrique centrale.
+      </p>
+      <div class="ira-intro__cta">
+        <a href="/expertises/" class="ira-btn ira-btn--ghost">
+          Découvrir nos expertises
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     2.2 — POURQUOI TRAVAILLER AVEC IRA
+     ========================================================= -->
+<section class="ira-why" id="pourquoi">
+  <div class="ira-wrap">
+    <h2 class="ira-title">Pourquoi travailler avec IRA</h2>
+    <p class="ira-lead">
+      Une équipe qui conjugue exigence méthodologique, connaissance du terrain
+      congolais et usage concret de la preuve pour la décision.
+    </p>
+
+    <div class="ira-why__grid">
+
+      <article class="ira-why__card">
+        <div class="ira-why__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2 4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6l-8-4z"/>
+            <polyline points="9 12 11.5 14.5 16 10"/>
+          </svg>
+        </div>
+        <h3>Rigueur scientifique</h3>
+        <p>Chaque étude et chaque évaluation est conçue et revue selon des standards méthodologiques exigeants, sous le contrôle d'un Comité Scientifique et d'Assurance Qualité indépendant.</p>
+      </article>
+
+      <article class="ira-why__card">
+        <div class="ira-why__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 21s-7-6.2-7-11a7 7 0 1 1 14 0c0 4.8-7 11-7 11z"/>
+            <circle cx="12" cy="10" r="2.5"/>
+          </svg>
+        </div>
+        <h3>Ancrage local, exigence internationale</h3>
+        <p>Une équipe qui connaît le contexte institutionnel congolais et régional, formée aux méthodes les plus reconnues d'évaluation d'impact et de recherche appliquée.</p>
+      </article>
+
+      <article class="ira-why__card">
+        <div class="ira-why__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="13 2 4 14 12 14 11 22 20 10 12 10 13 2"/>
+          </svg>
+        </div>
+        <h3>Une structure agile</h3>
+        <p>Des délais de mobilisation courts et une capacité à s'adapter à la taille et au budget de chaque mandat, sans compromis sur la qualité.</p>
+      </article>
+
+      <article class="ira-why__card">
+        <div class="ira-why__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 3v18h18"/>
+            <polyline points="7 15 11 10 15 13 20 6"/>
+          </svg>
+        </div>
+        <h3>De la preuve à la décision</h3>
+        <p>Nos livrables sont conçus pour être utilisés, pas seulement lus : recommandations opérationnelles, restitutions adaptées à chaque partie prenante.</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     2.3 — EXPERTISES + IMAGE RÉVÉLÉE
+     ========================================================= -->
+<section class="ira-expertise" id="expertises">
+  <div class="ira-wrap">
+
+    <div class="ira-expertise__head">
+      <div>
+        <h2 class="ira-title" style="margin-bottom:0;">Cinq savoir-faire,<br>une même exigence.</h2>
+      </div>
+      <a href="/expertises/" class="ira-btn ira-btn--ghost">
+        Voir la page Services
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+
+    <div class="ira-expertise__list">
+
+      <div class="ira-exp-item">
+        <span class="ira-exp-item__num">01</span>
+        <div class="ira-exp-item__body">
+          <h3>Recherche appliquée &amp; analyse socio-économique</h3>
+          <p>Comprendre une réalité sociale ou économique pour éclairer une décision.</p>
+        </div>
+      </div>
+
+      <div class="ira-exp-item">
+        <span class="ira-exp-item__num">02</span>
+        <div class="ira-exp-item__body">
+          <h3>Évaluation d'impact &amp; suivi-évaluation</h3>
+          <p>Mesurer ce qui fonctionne réellement, et pourquoi.</p>
+        </div>
+      </div>
+
+      <div class="ira-exp-item">
+        <span class="ira-exp-item__num">03</span>
+        <div class="ira-exp-item__body">
+          <h3>Conseil stratégique &amp; institutionnel</h3>
+          <p>Transformer les constats en choix stratégiques et en plans d'action.</p>
+        </div>
+      </div>
+
+      <div class="ira-exp-item">
+        <span class="ira-exp-item__num">04</span>
+        <div class="ira-exp-item__body">
+          <h3>Data, collecte &amp; outils numériques</h3>
+          <p>Des données fiables, de la collecte de terrain au tableau de bord.</p>
+        </div>
+      </div>
+
+      <div class="ira-exp-item">
+        <span class="ira-exp-item__num">05</span>
+        <div class="ira-exp-item__body">
+          <h3>Formation &amp; renforcement des capacités</h3>
+          <p>Transférer nos méthodes aux équipes de nos partenaires.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- =====================================================
+         COLONNE IMAGE ÉTROITE (3,7 cm) RÉVÉLÉE AU SCROLL
+         ===================================================== -->
+    <div class="ira-reveal" aria-hidden="true">
+      <div class="ira-reveal__mask">
+        <img src="/images/women-working.jpg"
+             alt=""
+             loading="lazy"
+             width="1920" height="1948">
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================
+     2.4 — NOTRE APPROCHE
+     ========================================================= -->
+<section class="ira-approach" id="approche">
+  <div class="ira-wrap ira-approach__inner">
+
+    <h2 class="ira-title">Trois principes, une seule finalité</h2>
+    <p class="ira-lead">
+      Une manière de travailler constante, quel que soit le mandat,
+      pour que la preuve serve réellement la décision.
+    </p>
+
+    <div class="ira-approach__grid">
+
+      <article class="ira-approach__card">
+        <div class="ira-why__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </div>
+        <h3>Evidence</h3>
+        <p>La rigueur méthodologique avant toute conclusion.</p>
+      </article>
+
+      <article class="ira-approach__card">
+        <div class="ira-why__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/>
+            <circle cx="12" cy="12" r="5"/>
+            <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+          </svg>
+        </div>
+        <h3>Impact</h3>
+        <p>Des recommandations conçues pour produire un changement mesurable.</p>
+      </article>
+
+      <article class="ira-approach__card">
+        <div class="ira-why__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18h6"/>
+            <path d="M10 21h4"/>
+            <path d="M12 3a6 6 0 0 0-4 10.5c.7.8 1 1.6 1 2.5h6c0-.9.3-1.7 1-2.5A6 6 0 0 0 12 3z"/>
+          </svg>
+        </div>
+        <h3>Better Decisions</h3>
+        <p>La donnée mise directement au service de vos décisions.</p>
+      </article>
+
+    </div>
+
+    <a href="/methodologie" class="ira-approach__link">
+      En savoir plus sur notre méthodologie
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="5" y1="12" x2="19" y2="12"/>
+        <polyline points="12 5 19 12 12 19"/>
+      </svg>
+    </a>
+
+  </div>
+</section>
+
+<!-- =========================================================
+     2.6 — APPEL FINAL
+     ========================================================= -->
+<section class="ira-final" id="contact">
+  <div class="ira-wrap">
+    <div class="ira-final__inner">
+      <h2>Une décision à préparer, un programme à évaluer, une stratégie à éclairer&nbsp;?</h2>
+      <p>
+        Parlons de votre besoin — nous vous proposons, sans engagement,
+        un premier échange pour cadrer ensemble la meilleure approche.
+      </p>
+      <a href="/consultations" class="ira-btn ira-btn--light">
+        Prendre contact
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     FOOTER — appelé depuis /components/footer.html
+     ========================================================= -->
+<div id="site-footer"></div>
+
+<!-- =========================================================
+     SCRIPTS
+     ========================================================= -->
+<script>
+  /* 1) Injection header + footer */
+  document.addEventListener("DOMContentLoaded", function () {
+    fetch("/components/header.html")
+      .then(function (r) { return r.ok ? r.text() : ""; })
+      .then(function (html) {
+        if (html) document.getElementById("site-header").innerHTML = html;
+      })
+      .catch(function () {});
+
+    fetch("/components/footer.html")
+      .then(function (r) { return r.ok ? r.text() : ""; })
+      .then(function (html) {
+        if (html) document.getElementById("site-footer").innerHTML = html;
+      })
+      .catch(function () {});
+  });
+
+  /* 2) Révélation au scroll — rideau du haut vers le bas */
+  (function () {
+    const masks = document.querySelectorAll('.ira-reveal__mask');
+    if (!masks.length) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let ticking = false;
+
+    function update() {
+      const wh = window.innerHeight;
+
+      masks.forEach(function (el) {
+        const rect = el.getBoundingClientRect();
+
+        // Commence quand le haut du bloc touche le bas de la fenêtre
+        // Termine quand le haut du bloc arrive à ~35% de la fenêtre
+        const start = wh;
+        const end   = wh * 0.35;
+
+        let p = (start - rect.top) / (start - end);
+        p = Math.max(0, Math.min(1, p));
+        p = p * (2 - p); // easeOutQuad
+
+        el.style.setProperty('--p', p);
+      });
+
+      ticking = false;
+    }
+
+    function onScroll() {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
+  })();
+</script>
 
 </body>
 </html>
