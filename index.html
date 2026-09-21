@@ -48,6 +48,22 @@ body{
   width: min(100%, 900px);
 }
 
+/* ---------- colonnes ---------- */
+.ira-hero__col{
+  display: flex;
+  flex-direction: column;
+  gap: .55em;                     /* espace entre le texte et l’image */
+  min-width: 0;
+}
+
+.ira-hero__col--left{
+  flex: 0 0 37.8%;                /* même largeur que l’image 1 */
+}
+
+.ira-hero__col--right{
+  flex: 1 1 auto;
+}
+
 /* ---------- visuels ---------- */
 .ira-shot{
   position: relative;
@@ -65,10 +81,9 @@ body{
 
 /* --- image 1 : ingénieure, plus basse que la 2e --- */
 .ira-shot--left{
-  flex: 0 0 37.8%;                       /* 340 / 900 */
-  aspect-ratio: 1432 / 1920;             /* ratio natif respecté */
-  border-radius: 3px 0 0 3px;
-  transform: translateY(clamp(28px, 6.6cqw, 60px));
+  width: 100%;
+  aspect-ratio: 1432 / 1920;      /* ratio natif respecté */
+  border-radius: 0 0 0 3px;       /* coin bas-gauche arrondi */
 }
 
 /* --- le trait qui relie les deux images --- */
@@ -88,23 +103,15 @@ body{
 
 /* --- image 2 : ouvriers / mise en œuvre --- */
 .ira-shot--right{
+  width: 100%;
   aspect-ratio: 4 / 3;
-  border-radius: 0 3px 3px 0;
+  border-radius: 0 3px 0 0;       /* coin haut-droit arrondi */
 }
 
-/* ---------- colonne de droite : texte + image + texte ---------- */
-.ira-hero__col{
-  flex: 1 1 auto;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: .65em;
-  font-size: clamp(18px, 3.3cqw, 30px);
-}
-
+/* ---------- textes ---------- */
 .ira-line{
   margin: 0;
-  font-size: 1em;
+  font-size: clamp(18px, 3.3cqw, 30px);
   line-height: 1.15;
   letter-spacing: -.015em;
 }
@@ -118,7 +125,6 @@ body{
   font-weight: 400;
   font-style: italic;
   color: var(--ira-muted);
-  padding-left: .55em;   /* laisse respirer le trait vertical — supprimez si vous voulez un alignement strict */
 }
 
 /* =========================================================
@@ -131,11 +137,14 @@ body{
     align-items: stretch;
   }
 
-  .ira-shot--left{
+  .ira-hero__col--left,
+  .ira-hero__col--right{
     flex: 0 0 auto;
     width: 100%;
+  }
+
+  .ira-shot--left{
     aspect-ratio: 4 / 5;
-    transform: none;                 /* plus de décalage vertical */
     border-radius: 3px 3px 0 0;
   }
 
@@ -152,13 +161,12 @@ body{
     );
   }
 
-  .ira-hero__col{
-    font-size: clamp(19px, 6.5vw, 26px);
-    padding-top: .9em;
-  }
-
   .ira-shot--right{
     border-radius: 0 0 3px 3px;
+  }
+
+  .ira-line{
+    font-size: clamp(19px, 6.5vw, 26px);
   }
 }
 </style>
@@ -169,20 +177,24 @@ body{
 <section class="ira-hero">
   <div class="ira-hero__stage">
 
-    <!-- IMAGE 1 — descendue par rapport à la 2e -->
-    <figure class="ira-shot ira-shot--left">
-      <img src="/images/woman-engineer.jpg"
-           alt="Ingénieure IRA sur le terrain"
-           width="1432" height="1920">
-    </figure>
-
-    <!-- COLONNE 2 : texte / image / texte -->
-    <div class="ira-hero__col">
+    <!-- COLONNE GAUCHE : texte + image 1 -->
+    <div class="ira-hero__col ira-hero__col--left">
 
       <p class="ira-line ira-line--top">Des preuves solides</p>
 
+      <figure class="ira-shot ira-shot--left">
+        <img src="/images/woman-engineer.jpg"
+             alt="Ingénieure IRA sur le terrain"
+             width="1432" height="1920">
+      </figure>
+
+    </div>
+
+    <!-- COLONNE DROITE : image 2 + texte -->
+    <div class="ira-hero__col ira-hero__col--right">
+
       <figure class="ira-shot ira-shot--right">
-        <img src="/images/workers-implementation.jpg"
+        <img src="/images/workers-implementation"
              alt="Équipe de mise en œuvre sur le terrain">
       </figure>
 
