@@ -21,6 +21,7 @@
   --ira-bg:     #f7f4ef;
   --ira-ink:    #101c2c;
   --ira-accent: #d9542f;
+  --ira-green:  #0a2e0a;   /* vert très foncé, proche du noir */
 }
 
 body{
@@ -125,7 +126,7 @@ body{
   border-radius: 0 3px 3px 0;
 }
 
-/* ---------- textes (Playball, tout en noir) ---------- */
+/* ---------- textes (Playball) ---------- */
 .ira-line{
   margin: 0;
   font-family: "Playball", cursive;
@@ -134,7 +135,14 @@ body{
   color: #000000;
   line-height: 1.12;
   letter-spacing: 0;
-  font-size: clamp(20px, 3.6cqw, 34px);
+  /* +5 % par rapport à la version précédente */
+  font-size: clamp(21px, 3.8cqw, 36px);
+}
+
+/* Texte du bas : vert foncé + léger décalage vers la droite */
+.ira-line--bottom{
+  color: var(--ira-green);
+  padding-left: 0.6em;   /* pousse le texte vers la droite */
 }
 
 /* =========================================================
@@ -180,8 +188,9 @@ body{
     border-radius: 0 0 3px 3px;
   }
 
+  /* +5 % également sur mobile */
   .ira-line{
-    font-size: clamp(24px, 7vw, 34px);
+    font-size: clamp(25px, 7.4vw, 36px);
   }
 }
 </style>
@@ -213,7 +222,9 @@ body{
              alt="Équipe de mise en œuvre sur le terrain">
       </figure>
 
-      <p class="ira-line playball-regular">pour des décisions qui comptent.</p>
+      <p class="ira-line ira-line--bottom playball-regular">
+        pour des décisions qui comptent.
+      </p>
 
     </div>
 
