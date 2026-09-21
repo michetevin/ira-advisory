@@ -1,237 +1,197 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IRA · Hero</title>
-  <style>
-    /* Reset & base */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IRA — Impact Research &amp; Advisory</title>
 
-    body {
-      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 2rem 1rem;
-    }
+<style>
+/* =========================================================
+   IRA — HERO
+   ========================================================= */
 
-    /* Hero container — modern, subtle shadow */
-    .hero {
-      max-width: 1200px;
-      width: 100%;
-      border-radius: 2rem;
-      background: #faf9f7;
-      box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.1);
-      padding: 2.5rem 2rem;
-      transition: all 0.2s;
-    }
+*, *::before, *::after { box-sizing: border-box; }
 
-    /* Text styling — elegant, refined */
-    .hero-title {
-      font-size: clamp(1.8rem, 6vw, 3rem);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      color: #1e2b2f;
-      margin-bottom: 2rem;
-      line-height: 1.2;
-      text-align: center;
-      position: relative;
-    }
+:root{
+  --ira-bg:     #f7f4ef;
+  --ira-ink:    #101c2c;
+  --ira-muted:  #5d6b7e;
+  --ira-accent: #d9542f;
+}
 
-    .hero-title::after {
-      content: '';
-      display: block;
-      width: 70px;
-      height: 4px;
-      background: #b8865b;
-      margin: 0.75rem auto 0;
-      border-radius: 4px;
-    }
+body{
+  margin: 0;
+  background: var(--ira-bg);
+  color: var(--ira-ink);
+  font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
 
-    /* Image pair container — no spacing, centered */
-    .image-pair {
-      display: flex;
-      align-items: flex-end;   /* align bottoms to control offset */
-      justify-content: center;
-      gap: 0;                 /* no spacing between images */
-      width: 100%;
-      line-height: 0;         /* remove inline gap */
-      position: relative;
-      margin-bottom: 1.75rem;
-    }
+/* ---------- coquille du hero ---------- */
+.ira-hero{
+  display: flex;
+  justify-content: center;
+  padding:
+    clamp(40px, 7vw, 110px)
+    clamp(16px, 4vw, 40px)
+    clamp(110px, 13vw, 180px);
+}
 
-    /* Shared image styles */
-    .image-pair img {
-      display: block;
-      width: 50%;
-      height: auto;
-      object-fit: cover;
-      border-radius: 0;       /* no rounded corners for seamless junction */
-      transition: transform 0.3s ease, filter 0.3s ease;
-      box-shadow: none;
-      vertical-align: bottom; /* kill any phantom spacing */
-    }
+/* ---------- scène : les 2 visuels collés ---------- */
+.ira-hero__stage{
+  container-type: inline-size;
+  display: flex;
+  align-items: flex-end;          /* bas des deux colonnes alignés */
+  justify-content: center;
+  gap: 0;                         /* AUCUN espace entre les images */
+  width: min(100%, 900px);
+}
 
-    /* First image: woman-engineer, pushed down */
-    .img-first {
-      transform: translateY(28px);   /* lower it */
-      z-index: 1;
-      border-right: 1px solid rgba(255, 255, 255, 0.2); /* subtle seam */
-    }
+/* ---------- visuels ---------- */
+.ira-shot{
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  background: #e6e1d8;            /* placeholder pendant le chargement */
+}
 
-    /* Second image: workers-implementation */
-    .img-second {
-      transform: translateY(0);
-      z-index: 2;
-    }
+.ira-shot img{
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-    /* Subtle interactive link between the images */
-    .image-pair::before {
-      content: '';
-      position: absolute;
-      top: 40%;
-      left: 50%;
-      width: 48px;
-      height: 48px;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(6px);
-      border-radius: 50%;
-      transform: translate(-50%, -50%) scale(1);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-      border: 2px solid #ffffff;
-    }
+/* --- image 1 : ingénieure, plus basse que la 2e --- */
+.ira-shot--left{
+  flex: 0 0 37.8%;                       /* 340 / 900 */
+  aspect-ratio: 1432 / 1920;             /* ratio natif respecté */
+  border-radius: 3px 0 0 3px;
+  transform: translateY(clamp(28px, 6.6cqw, 60px));
+}
 
-    /* decorative link icon using pseudo-element on the bridge */
-    .image-pair::after {
-      content: '⛓️';
-      position: absolute;
-      top: 40%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 1.4rem;
-      z-index: 11;
-      pointer-events: none;
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-      opacity: 0.9;
-    }
+/* --- le trait qui relie les deux images --- */
+.ira-shot--left::after{
+  content: "";
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    rgba(217, 84, 47, 0)    0%,
+    rgba(217, 84, 47, .85) 32%,
+    var(--ira-accent)     100%
+  );
+  pointer-events: none;
+}
 
-    /* Subtext under second image */
-    .hero-sub {
-      font-size: clamp(1.1rem, 4vw, 1.6rem);
-      font-weight: 400;
-      color: #3a4a4f;
-      text-align: center;
-      margin-top: 0.5rem;
-      letter-spacing: -0.01em;
-      line-height: 1.4;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      padding: 0 0.5rem;
-      border-bottom: 1px solid #e3dbd1;
-      padding-bottom: 1.25rem;
-    }
+/* --- image 2 : ouvriers / mise en œuvre --- */
+.ira-shot--right{
+  aspect-ratio: 4 / 3;
+  border-radius: 0 3px 3px 0;
+}
 
-    /* Small brand note (optional but nice) */
-    .brand-note {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: #9b8b7a;
-      text-align: center;
-      margin-top: 1.5rem;
-      font-weight: 500;
-    }
+/* ---------- colonne de droite : texte + image + texte ---------- */
+.ira-hero__col{
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .65em;
+  font-size: clamp(18px, 3.3cqw, 30px);
+}
 
-    /* Responsive adjustments */
-    @media (max-width: 600px) {
-      .hero {
-        padding: 1.75rem 1rem;
-      }
-      .img-first {
-        transform: translateY(16px);
-      }
-      .image-pair::before,
-      .image-pair::after {
-        font-size: 1rem;
-        width: 32px;
-        height: 32px;
-      }
-      .image-pair::after {
-        font-size: 1rem;
-      }
-    }
+.ira-line{
+  margin: 0;
+  font-size: 1em;
+  line-height: 1.15;
+  letter-spacing: -.015em;
+}
 
-    /* Keep the hero images from being too tall on very small screens */
-    @media (max-width: 480px) {
-      .image-pair img {
-        width: 50%;
-        height: auto;
-        max-height: 240px;
-        object-fit: cover;
-      }
-    }
-  </style>
+.ira-line--top{
+  font-weight: 700;
+  color: var(--ira-ink);
+}
+
+.ira-line--bottom{
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ira-muted);
+  padding-left: .55em;   /* laisse respirer le trait vertical — supprimez si vous voulez un alignement strict */
+}
+
+/* =========================================================
+   RESPONSIVE — sous 720px on empile
+   ========================================================= */
+@media (max-width: 720px){
+
+  .ira-hero__stage{
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ira-shot--left{
+    flex: 0 0 auto;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    transform: none;                 /* plus de décalage vertical */
+    border-radius: 3px 3px 0 0;
+  }
+
+  /* le trait devient horizontal, sous la 1re image */
+  .ira-shot--left::after{
+    top: auto; left: 0; right: 0; bottom: 0;
+    width: auto;
+    height: 2px;
+    background: linear-gradient(
+      to right,
+      rgba(217, 84, 47, 0)    0%,
+      rgba(217, 84, 47, .85) 60%,
+      var(--ira-accent)     100%
+    );
+  }
+
+  .ira-hero__col{
+    font-size: clamp(19px, 6.5vw, 26px);
+    padding-top: .9em;
+  }
+
+  .ira-shot--right{
+    border-radius: 0 0 3px 3px;
+  }
+}
+</style>
 </head>
-<body>
-  <section class="hero">
-    <!-- Text above: "Des preuves solides" -->
-    <h1 class="hero-title">Des preuves solides</h1>
 
-    <!-- Two images side by side, no gap, first one lower -->
-    <div class="image-pair">
-      <img 
-        class="img-first" 
-        src="/images/woman-engineer.jpg" 
-        alt="Femme ingénieure sur le terrain"
-        loading="lazy"
-      >
-      <img 
-        class="img-second" 
-        src="/images/workers-implementation" 
-        alt="Équipe de mise en œuvre sur site"
-        loading="lazy"
-      >
-      <!-- visual link between images is handled by pseudo-elements -->
+<body>
+
+<section class="ira-hero">
+  <div class="ira-hero__stage">
+
+    <!-- IMAGE 1 — descendue par rapport à la 2e -->
+    <figure class="ira-shot ira-shot--left">
+      <img src="/images/woman-engineer.jpg"
+           alt="Ingénieure IRA sur le terrain"
+           width="1432" height="1920">
+    </figure>
+
+    <!-- COLONNE 2 : texte / image / texte -->
+    <div class="ira-hero__col">
+
+      <p class="ira-line ira-line--top">Des preuves solides</p>
+
+      <figure class="ira-shot ira-shot--right">
+        <img src="/images/workers-implementation.jpg"
+             alt="Équipe de mise en œuvre sur le terrain">
+      </figure>
+
+      <p class="ira-line ira-line--bottom">pour des décisions qui comptent.</p>
+
     </div>
 
-    <!-- Text under second image -->
-    <p class="hero-sub">pour des décisions qui comptent.</p>
+  </div>
+</section>
 
-    <!-- subtle brand mention (IRA) -->
-    <div class="brand-note">IRA — Impact Research & Advisory</div>
-  </section>
-
-  <!-- tiny script to handle missing image gracefully (optional) -->
-  <script>
-    (function() {
-      // If the second image fails to load (e.g., missing extension), we can set a fallback.
-      const secondImg = document.querySelector('.img-second');
-      if (secondImg) {
-        secondImg.addEventListener('error', function() {
-          // fallback: simple neutral placeholder (avoids broken icon)
-          this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"%3E%3Crect width="400" height="400" fill="%23d9d2c5"/%3E%3Ctext x="50%25" y="50%25" font-family="system-ui" font-size="18" fill="%235a4e3e" text-anchor="middle" dy=".3em"%3Eworkers-implementation%3C/text%3E%3C/svg%3E';
-        });
-      }
-      const firstImg = document.querySelector('.img-first');
-      if (firstImg) {
-        firstImg.addEventListener('error', function() {
-          this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500"%3E%3Crect width="400" height="500" fill="%23c9bcae"/%3E%3Ctext x="50%25" y="50%25" font-family="system-ui" font-size="18" fill="%233d362e" text-anchor="middle" dy=".3em"%3Ewoman-engineer%3C/text%3E%3C/svg%3E';
-        });
-      }
-    })();
-  </script>
 </body>
 </html>
