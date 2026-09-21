@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>IRA — Impact Research &amp; Advisory</title>
 
+<!-- ===== Google Fonts : Playball ===== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playball&display=swap" rel="stylesheet">
+
 <style>
 /* =========================================================
    IRA — HERO
@@ -15,7 +20,6 @@
 :root{
   --ira-bg:     #f7f4ef;
   --ira-ink:    #101c2c;
-  --ira-muted:  #5d6b7e;
   --ira-accent: #d9542f;
 }
 
@@ -26,6 +30,13 @@ body{
   font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+/* ---------- classe Playball (fournie) ---------- */
+.playball-regular {
+  font-family: "Playball", cursive;
+  font-weight: 400;
+  font-style: normal;
 }
 
 /* ---------- coquille du hero ---------- */
@@ -52,16 +63,22 @@ body{
 .ira-hero__col{
   display: flex;
   flex-direction: column;
-  gap: .55em;                     /* espace entre le texte et l’image */
   min-width: 0;
 }
 
+/* Colonne gauche : texte + image 1
+   → le décalage vers le bas est porté par la COLONNE,
+     ce qui laisse la position de l’image identique à avant. */
 .ira-hero__col--left{
-  flex: 0 0 37.8%;                /* même largeur que l’image 1 */
+  flex: 0 0 37.8%;                              /* 340 / 900 */
+  gap: .45em;                                   /* espace texte ↔ image */
+  transform: translateY(clamp(28px, 6.6cqw, 60px));  /* ← décalage conservé */
 }
 
+/* Colonne droite : image 2 + texte */
 .ira-hero__col--right{
   flex: 1 1 auto;
+  gap: .65em;
 }
 
 /* ---------- visuels ---------- */
@@ -79,14 +96,14 @@ body{
   object-fit: cover;
 }
 
-/* --- image 1 : ingénieure, plus basse que la 2e --- */
+/* --- image 1 : ingénieure (reste plus basse) --- */
 .ira-shot--left{
   width: 100%;
   aspect-ratio: 1432 / 1920;      /* ratio natif respecté */
-  border-radius: 0 0 0 3px;       /* coin bas-gauche arrondi */
+  border-radius: 3px 0 0 3px;
 }
 
-/* --- le trait qui relie les deux images --- */
+/* --- trait de liaison entre les deux images --- */
 .ira-shot--left::after{
   content: "";
   position: absolute;
@@ -105,26 +122,19 @@ body{
 .ira-shot--right{
   width: 100%;
   aspect-ratio: 4 / 3;
-  border-radius: 0 3px 0 0;       /* coin haut-droit arrondi */
+  border-radius: 0 3px 3px 0;
 }
 
-/* ---------- textes ---------- */
+/* ---------- textes (Playball, tout en noir) ---------- */
 .ira-line{
   margin: 0;
-  font-size: clamp(18px, 3.3cqw, 30px);
-  line-height: 1.15;
-  letter-spacing: -.015em;
-}
-
-.ira-line--top{
-  font-weight: 700;
-  color: var(--ira-ink);
-}
-
-.ira-line--bottom{
+  font-family: "Playball", cursive;
   font-weight: 400;
-  font-style: italic;
-  color: var(--ira-muted);
+  font-style: normal;
+  color: #000000;
+  line-height: 1.12;
+  letter-spacing: 0;
+  font-size: clamp(20px, 3.6cqw, 34px);
 }
 
 /* =========================================================
@@ -141,6 +151,11 @@ body{
   .ira-hero__col--right{
     flex: 0 0 auto;
     width: 100%;
+  }
+
+  /* plus de décalage vertical une fois empilé */
+  .ira-hero__col--left{
+    transform: none;
   }
 
   .ira-shot--left{
@@ -166,7 +181,7 @@ body{
   }
 
   .ira-line{
-    font-size: clamp(19px, 6.5vw, 26px);
+    font-size: clamp(24px, 7vw, 34px);
   }
 }
 </style>
@@ -177,10 +192,10 @@ body{
 <section class="ira-hero">
   <div class="ira-hero__stage">
 
-    <!-- COLONNE GAUCHE : texte + image 1 -->
+    <!-- COLONNE GAUCHE : « Des preuves solides » + image 1 -->
     <div class="ira-hero__col ira-hero__col--left">
 
-      <p class="ira-line ira-line--top">Des preuves solides</p>
+      <p class="ira-line playball-regular">Des preuves solides</p>
 
       <figure class="ira-shot ira-shot--left">
         <img src="/images/woman-engineer.jpg"
@@ -190,15 +205,15 @@ body{
 
     </div>
 
-    <!-- COLONNE DROITE : image 2 + texte -->
+    <!-- COLONNE DROITE : image 2 + « pour des décisions qui comptent. » -->
     <div class="ira-hero__col ira-hero__col--right">
 
       <figure class="ira-shot ira-shot--right">
-        <img src="/images/workers-implementation"
+        <img src="/images/workers-implementation.jpg"
              alt="Équipe de mise en œuvre sur le terrain">
       </figure>
 
-      <p class="ira-line ira-line--bottom">pour des décisions qui comptent.</p>
+      <p class="ira-line playball-regular">pour des décisions qui comptent.</p>
 
     </div>
 
