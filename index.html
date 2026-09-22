@@ -312,7 +312,7 @@ a   { color: inherit; text-decoration: none; }
 }
 
 /* Visuel d'ouverture de la section Expertises
-   → ratio natif 1920 × 1948, pleine largeur du conteneur */
+   → hauteur fixe 450px desktop / 300px mobile, pleine largeur */
 .ira-expertise__figure{
   margin: 0 0 clamp(2.5rem, 5vw, 4rem);
   border-radius: var(--ira-radius);
@@ -322,10 +322,15 @@ a   { color: inherit; text-decoration: none; }
 .ira-expertise__figure img{
   display: block;
   width: 100%;
-  height: auto;          /* ratio intrinsèque conservé */
-  aspect-ratio: 1920 / 1948;
+  height: 450px;
   object-fit: cover;
   object-position: center;
+}
+
+@media (max-width: 720px){
+  .ira-expertise__figure img{
+    height: 300px;
+  }
 }
 
 .ira-expertise__head{
@@ -599,7 +604,7 @@ a   { color: inherit; text-decoration: none; }
 <section class="ira-expertise" id="expertises">
   <div class="ira-wrap">
 
-    <!-- Visuel d'ouverture de la section (ratio natif 1920 × 1948) -->
+    <!-- Visuel d'ouverture de la section (hauteur fixe 450px / 300px mobile) -->
     <figure class="ira-expertise__figure">
       <img src="/images/women-working.jpg"
            alt="Équipe IRA au travail"
