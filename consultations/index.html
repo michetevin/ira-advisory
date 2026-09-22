@@ -1,57 +1,858 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Random Glow</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: grid;
-      place-items: center;
-      background: #0d0d12;
-      font-family: system-ui, sans-serif;
-      transition: background 0.6s ease;
-    }
-    .card {
-      padding: 2.5rem 3rem;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      text-align: center;
-      color: #fff;
-      box-shadow: 0 0 40px rgba(120, 80, 255, 0.35);
-    }
-    h1 { margin: 0 0 1rem; font-size: 1.4rem; letter-spacing: 1px; }
-    button {
-      padding: 0.6rem 1.4rem;
-      border: none;
-      border-radius: 999px;
-      background: #7c5cff;
-      color: white;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: transform 0.15s ease;
-    }
-    button:hover { transform: scale(1.08); }
-  </style>
-</head>
-<body>
-  <div class="card">
-    <h1 id="label">Click for a new vibe</h1>
-    <button onclick="shuffle()">Shuffle</button>
-  </div>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demander une consultation — IRA | Impact Research &amp; Advisory</title>
 
-  <script>
-    function shuffle() {
-      const h = Math.floor(Math.random() * 360);
-      document.body.style.background =
-        `linear-gradient(135deg, hsl(${h},70%,12%), hsl(${(h + 60) % 360},70%,20%))`;
-      document.getElementById('label').textContent =
-        `Hue ${h}° — looking good`;
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Playball&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================================
+   IRA — GLOBAL
+   ========================================================= */
+*, *::before, *::after { box-sizing: border-box; }
+
+:root{
+  --ira-bg:     #f7f4ef;
+  --ira-bg-alt: #ffffff;
+  --ira-ink:    #101c2c;
+  --green:      #2c7a3e;
+  --night:      #0f1e3d;
+  --ira-green:  #0a2e0a;
+  --ira-muted:  #5b6472;
+  --ira-line:   #e6e1d8;
+  --ira-radius: 6px;
+  --ira-max:    1200px;
+}
+
+html { scroll-behavior: smooth; }
+
+body{
+  margin: 0;
+  background: var(--ira-bg);
+  color: var(--ira-ink);
+  font-family: "Lexend", "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img { max-width: 100%; display: block; }
+a   { color: inherit; text-decoration: none; }
+
+.ira-wrap{
+  width: min(100% - 40px, var(--ira-max));
+  margin-inline: auto;
+}
+
+/* ---------- boutons ---------- */
+.ira-btn{
+  display: inline-flex;
+  align-items: center;
+  gap: .55em;
+  padding: 1rem 1.7rem;
+  border-radius: var(--ira-radius);
+  font-family: "Lexend", sans-serif;
+  font-weight: 500;
+  font-size: .95rem;
+  letter-spacing: .01em;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: transform .2s ease, background-color .25s ease, color .25s ease, border-color .25s ease, box-shadow .25s ease;
+  white-space: nowrap;
+  text-align: center;
+}
+.ira-btn:hover { transform: translateY(-2px); }
+.ira-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+.ira-btn--primary{ background: var(--green); color: #fff; border-color: var(--green); }
+.ira-btn--primary:hover:not(:disabled){ background: var(--night); border-color: var(--night); }
+
+.ira-btn--ghost{ background: transparent; color: var(--night); border-color: var(--night); }
+.ira-btn--ghost:hover{ background: var(--night); color: #fff; }
+
+.ira-btn--light{ background: transparent; color: #fff; border-color: rgba(255,255,255,.7); }
+.ira-btn--light:hover{ background: #fff; color: var(--green); }
+
+/* ---------- titres / section-line ---------- */
+.ira-title{
+  font-family: "Lexend", sans-serif;
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  line-height: 1.15;
+  font-weight: 600;
+  margin: 0 0 1rem;
+  letter-spacing: -.02em;
+  color: var(--night);
+}
+.ira-section-line{
+  display: block;
+  width: 44px;
+  height: 2px;
+  background: var(--green);
+  border-radius: 2px;
+  margin: 0 0 1.4rem;
+}
+
+/* =========================================================
+   EN-TÊTE DE PAGE (simplifié)
+   ========================================================= */
+.ira-pagehero{
+  background: var(--ira-bg-alt);
+  padding: clamp(40px, 5vw, 70px) 0;
+  border-bottom: 1px solid var(--ira-line);
+}
+.ira-pagehero__inner{ max-width: 900px; }
+
+.ira-pagehero__title{
+  font-family: "Lexend", sans-serif;
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  line-height: 1.12;
+  font-weight: 600;
+  letter-spacing: -.025em;
+  color: var(--night);
+  margin: 0;
+}
+
+/* =========================================================
+   CORPS — FORMULAIRE + ASIDE
+   ========================================================= */
+.ira-consult{
+  background: var(--ira-bg);
+  padding: clamp(60px, 9vw, 110px) 0;
+}
+.ira-consult__grid{
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+  gap: clamp(2rem, 3.5vw, 3.2rem);
+  align-items: start;
+}
+
+/* ---------- carte formulaire ---------- */
+.ira-form-card{
+  background: var(--ira-bg-alt);
+  border: 1px solid var(--ira-line);
+  border-radius: var(--ira-radius);
+  padding: clamp(1.6rem, 3vw, 2.8rem);
+}
+
+.ira-form-card__head{
+  margin-bottom: 2.2rem;
+  padding-bottom: 1.6rem;
+  border-bottom: 1px solid var(--ira-line);
+}
+.ira-form-card__head h2{
+  font-family: "Lexend", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: -.015em;
+  color: var(--night);
+  margin: 0 0 .5rem;
+}
+.ira-form-card__head p{
+  font-size: .92rem;
+  font-weight: 300;
+  color: var(--ira-muted);
+  margin: 0;
+}
+.ira-form-card__head .req-note{
+  display: block;
+  margin-top: .9rem;
+  font-size: .8rem;
+  color: var(--ira-muted);
+}
+.ira-form-card__head .req-note em{
+  color: var(--green);
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* ---------- fieldset + legend ---------- */
+.ira-form fieldset{
+  border: 0;
+  padding: 0;
+  margin: 0 0 2.4rem;
+}
+.ira-form legend{
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  font-family: "DM Serif Display", serif;
+  font-size: 1.15rem;
+  line-height: 1.2;
+  color: var(--night);
+  padding: 0;
+  margin: 0 0 1.4rem;
+}
+.ira-form legend::before{
+  content: "";
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  transform: translateY(-1px);
+}
+
+/* ---------- champs ---------- */
+.ira-field{
+  margin-bottom: 1.1rem;
+}
+.ira-field--row{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.ira-field label{
+  display: block;
+  font-size: .84rem;
+  font-weight: 500;
+  color: var(--night);
+  margin-bottom: .5rem;
+  letter-spacing: .01em;
+}
+.ira-field label .req{
+  color: var(--green);
+  font-weight: 600;
+  margin-left: .15em;
+}
+.ira-field .hint{
+  display: block;
+  margin-top: .45rem;
+  font-size: .78rem;
+  color: var(--ira-muted);
+  font-weight: 300;
+}
+
+.ira-input,
+.ira-textarea,
+.ira-select{
+  width: 100%;
+  font-family: "Lexend", sans-serif;
+  font-size: .95rem;
+  font-weight: 300;
+  color: var(--ira-ink);
+  background: #fff;
+  border: 1.5px solid var(--ira-line);
+  border-radius: var(--ira-radius);
+  padding: .85rem 1rem;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.ira-textarea{
+  min-height: 150px;
+  resize: vertical;
+  line-height: 1.6;
+}
+.ira-select{
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%235b6472' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.6rem;
+  cursor: pointer;
+}
+
+.ira-input::placeholder,
+.ira-textarea::placeholder{ color: #a9b0bd; }
+
+.ira-input:focus,
+.ira-textarea:focus,
+.ira-select:focus{
+  border-color: var(--green);
+  box-shadow: 0 0 0 4px rgba(44,122,62,.12);
+}
+
+/* ---------- checkbox ---------- */
+.ira-check{
+  display: flex;
+  align-items: flex-start;
+  gap: .75rem;
+  font-size: .87rem;
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--ira-muted);
+  cursor: pointer;
+}
+.ira-check input[type="checkbox"]{
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+  accent-color: var(--green);
+  cursor: pointer;
+}
+.ira-check a{
+  color: var(--green);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ---------- actions ---------- */
+.ira-form__actions{
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  padding-top: 1.8rem;
+  border-top: 1px solid var(--ira-line);
+}
+.ira-form__actions .ira-btn{
+  padding: 1.05rem 2rem;
+  font-size: .98rem;
+}
+.ira-form__actions .ira-note{
+  font-size: .82rem;
+  color: var(--ira-muted);
+  font-weight: 300;
+  margin: 0;
+  max-width: 26ch;
+}
+
+/* =========================================================
+   ASIDE
+   ========================================================= */
+.ira-aside{
+  position: sticky;
+  top: 108px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.ira-aside__card{
+  background: var(--ira-bg-alt);
+  border: 1px solid var(--ira-line);
+  border-radius: var(--ira-radius);
+  padding: 1.8rem 1.7rem;
+}
+.ira-aside__card--dark{
+  background: var(--night);
+  border-color: var(--night);
+  color: #fff;
+}
+
+.ira-aside__card h3{
+  font-family: "Lexend", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -.005em;
+  color: var(--night);
+  margin: 0 0 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+.ira-aside__card--dark h3{ color: #fff; }
+
+.ira-aside__card h3 svg{
+  flex: 0 0 auto;
+  color: var(--green);
+}
+.ira-aside__card--dark h3 svg{ color: #8fd49e; }
+
+/* étapes numérotées */
+.ira-aside__step{
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  gap: .8rem;
+  padding: .65rem 0;
+  border-bottom: 1px dashed var(--ira-line);
+  font-size: .88rem;
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--ira-muted);
+}
+.ira-aside__step:last-child{ border-bottom: 0; padding-bottom: 0; }
+.ira-aside__step:first-child{ padding-top: 0; }
+.ira-aside__step .n{
+  font-family: "DM Serif Display", serif;
+  font-size: 1rem;
+  color: var(--green);
+  line-height: 1.4;
+}
+.ira-aside__step strong{
+  display: block;
+  color: var(--night);
+  font-weight: 500;
+}
+
+/* carte contact */
+.ira-aside__contact{
+  display: flex;
+  align-items: flex-start;
+  gap: .8rem;
+  padding: .6rem 0;
+  font-size: .89rem;
+  font-weight: 300;
+  color: rgba(255,255,255,.8);
+}
+.ira-aside__contact svg{
+  flex: 0 0 auto;
+  margin-top: 3px;
+  color: #8fd49e;
+}
+.ira-aside__contact a{
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.ira-aside__contact a:hover{ color: #8fd49e; }
+
+/* =========================================================
+   ÉTAT DE SUCCÈS
+   ========================================================= */
+.ira-success{
+  display: none;
+  background: var(--ira-bg-alt);
+  border: 1px solid var(--ira-line);
+  border-radius: var(--ira-radius);
+  padding: clamp(2rem, 4vw, 3.2rem);
+  text-align: center;
+}
+.ira-success.is-visible{ display: block; }
+
+.ira-success__icon{
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(44,122,62,.1);
+  color: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.4rem;
+}
+.ira-success__icon svg{
+  width: 30px;
+  height: 30px;
+}
+
+.ira-success h2{
+  font-family: "Lexend", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -.015em;
+  color: var(--night);
+  margin: 0 0 .8rem;
+}
+.ira-success p{
+  font-size: .98rem;
+  font-weight: 300;
+  color: var(--ira-muted);
+  margin: 0 auto 1.8rem;
+  max-width: 46ch;
+  line-height: 1.65;
+}
+.ira-success p strong{ color: var(--green); font-weight: 500; }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 960px){
+  .ira-consult__grid{
+    grid-template-columns: 1fr;
+  }
+  .ira-aside{
+    position: static;
+  }
+}
+
+@media (max-width: 620px){
+  .ira-field--row{
+    grid-template-columns: 1fr;
+  }
+  .ira-form-card{ padding: 1.5rem 1.2rem; }
+  .ira-aside__card{ padding: 1.5rem 1.3rem; }
+  .ira-form__actions{
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ira-form__actions .ira-btn{
+    width: 100%;
+    justify-content: center;
+  }
+  .ira-form__actions .ira-note{ max-width: none; text-align: center; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER (injecté) -->
+<div id="site-header"></div>
+
+<!-- =========================================================
+     EN-TÊTE DE PAGE (simplifié)
+     ========================================================= -->
+<section class="ira-pagehero">
+  <div class="ira-wrap">
+    <div class="ira-pagehero__inner">
+      <h1 class="ira-pagehero__title">Demander une consultation</h1>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     FORMULAIRE + ASIDE
+     ========================================================= -->
+<section class="ira-consult">
+  <div class="ira-wrap">
+    <div class="ira-consult__grid">
+
+      <!-- =====================================================
+           FORMULAIRE
+           ===================================================== -->
+      <div>
+
+        <!-- ---------- état succès (caché par défaut) ---------- -->
+        <div class="ira-success" id="formSuccess" aria-hidden="true" role="status">
+          <div class="ira-success__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <h2>Demande envoyée</h2>
+          <p>
+            Merci — nous avons bien reçu votre demande. Un membre de l'équipe IRA
+            vous contactera sous <strong>48 heures ouvrées</strong> à l'adresse
+            indiquée pour convenir d'un premier échange.
+          </p>
+          <a href="/" class="ira-btn ira-btn--primary">
+            Retour à l'accueil
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+
+        <!-- ---------- carte formulaire ---------- -->
+        <div class="ira-form-card" id="formCard">
+
+          <div class="ira-form-card__head">
+            <h2>Formulaire de demande</h2>
+            <p>Remplissez les informations ci-dessous. Plus votre description est précise, plus notre réponse sera ciblée.</p>
+            <span class="req-note"><em>*</em> Champs obligatoires</span>
+          </div>
+
+          <form class="ira-form" id="consultForm" novalidate>
+
+            <!-- ============ 1. Coordonnées ============ -->
+            <fieldset>
+              <legend>Vos coordonnées</legend>
+
+              <div class="ira-field--row">
+                <div class="ira-field">
+                  <label for="fullname">Nom complet <span class="req">*</span></label>
+                  <input type="text" class="ira-input" id="fullname" name="fullname"
+                         autocomplete="name" placeholder="Prénom Nom" required>
+                </div>
+
+                <div class="ira-field">
+                  <label for="role">Fonction</label>
+                  <input type="text" class="ira-input" id="role" name="role"
+                         autocomplete="organization-title" placeholder="Ex. Directrice des programmes">
+                </div>
+              </div>
+
+              <div class="ira-field--row">
+                <div class="ira-field">
+                  <label for="email">Email professionnel <span class="req">*</span></label>
+                  <input type="email" class="ira-input" id="email" name="email"
+                         autocomplete="email" placeholder="prenom.nom@organisation.org" required>
+                </div>
+
+                <div class="ira-field">
+                  <label for="phone">Téléphone</label>
+                  <input type="tel" class="ira-input" id="phone" name="phone"
+                         autocomplete="tel" placeholder="+243 ...">
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- ============ 2. Organisation ============ -->
+            <fieldset>
+              <legend>Votre organisation</legend>
+
+              <div class="ira-field--row">
+                <div class="ira-field">
+                  <label for="org">Nom de l'organisation <span class="req">*</span></label>
+                  <input type="text" class="ira-input" id="org" name="org"
+                         autocomplete="organization" placeholder="Nom de votre structure" required>
+                </div>
+
+                <div class="ira-field">
+                  <label for="country">Pays <span class="req">*</span></label>
+                  <input type="text" class="ira-input" id="country" name="country"
+                         autocomplete="country-name" placeholder="Ex. République démocratique du Congo" required>
+                </div>
+              </div>
+
+              <div class="ira-field">
+                <label for="org-type">Type d'organisation <span class="req">*</span></label>
+                <select class="ira-select" id="org-type" name="org-type" required>
+                  <option value="" selected disabled>— Sélectionnez —</option>
+                  <option>ONG / Organisation de la société civile</option>
+                  <option>Agence des Nations Unies</option>
+                  <option>Bailleur de fonds / Partenaire technique et financier</option>
+                  <option>Institution publique / Administration</option>
+                  <option>Organisation internationale</option>
+                  <option>Université / Centre de recherche</option>
+                  <option>Secteur privé / Entreprise</option>
+                  <option>Autre</option>
+                </select>
+              </div>
+            </fieldset>
+
+            <!-- ============ 3. Votre besoin ============ -->
+            <fieldset>
+              <legend>Votre besoin</legend>
+
+              <div class="ira-field">
+                <label for="expertise">Domaine d'expertise principal <span class="req">*</span></label>
+                <select class="ira-select" id="expertise" name="expertise" required>
+                  <option value="" selected disabled>— Sélectionnez —</option>
+                  <option>Data, collecte &amp; outils numériques</option>
+                  <option>Recherche appliquée &amp; analyse socio-économique</option>
+                  <option>Évaluation d'impact &amp; suivi-évaluation</option>
+                  <option>Conseil stratégique &amp; institutionnel</option>
+                  <option>Formation &amp; renforcement des capacités</option>
+                  <option>Multi-domaines / À définir ensemble</option>
+                </select>
+              </div>
+
+              <div class="ira-field">
+                <label for="description">Description de votre besoin <span class="req">*</span></label>
+                <textarea class="ira-textarea" id="description" name="description" required
+                          placeholder="Contexte, questions de recherche, objectifs attendus, population cible, contraintes éventuelles…"></textarea>
+                <span class="hint">Quelques lignes suffisent — nous approfondirons lors du premier échange.</span>
+              </div>
+            </fieldset>
+
+            <!-- ============ 4. Cadre de la mission ============ -->
+            <fieldset>
+              <legend>Cadre de la mission</legend>
+
+              <div class="ira-field--row">
+                <div class="ira-field">
+                  <label for="timeline">Calendrier souhaité</label>
+                  <select class="ira-select" id="timeline" name="timeline">
+                    <option value="" selected disabled>— Sélectionnez —</option>
+                    <option>Urgent (moins d'1 mois)</option>
+                    <option>Court terme (1 à 3 mois)</option>
+                    <option>Moyen terme (3 à 6 mois)</option>
+                    <option>Long terme (plus de 6 mois)</option>
+                    <option>À définir</option>
+                  </select>
+                </div>
+
+                <div class="ira-field">
+                  <label for="budget">Budget indicatif</label>
+                  <select class="ira-select" id="budget" name="budget">
+                    <option value="" selected disabled>— Sélectionnez —</option>
+                    <option>Moins de 10 000 USD</option>
+                    <option>10 000 – 50 000 USD</option>
+                    <option>50 000 – 100 000 USD</option>
+                    <option>Plus de 100 000 USD</option>
+                    <option>À définir / Non communiqué</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="ira-field">
+                <label for="source">Comment nous avez-vous connu&nbsp;?</label>
+                <select class="ira-select" id="source" name="source">
+                  <option value="" selected disabled>— Sélectionnez —</option>
+                  <option>Recommandation</option>
+                  <option>Recherche en ligne</option>
+                  <option>Événement / Conférence</option>
+                  <option>Réseaux sociaux (LinkedIn, etc.)</option>
+                  <option>Publication / Article</option>
+                  <option>Autre</option>
+                </select>
+              </div>
+            </fieldset>
+
+            <!-- ============ 5. Consentement ============ -->
+            <fieldset>
+              <legend>Consentement</legend>
+
+              <label class="ira-check">
+                <input type="checkbox" id="consent" name="consent" required>
+                <span>
+                  J'accepte qu'IRA utilise les informations transmises pour traiter
+                  ma demande et me recontacter. Aucune donnée n'est partagée avec des
+                  tiers. <span class="req">*</span>
+                </span>
+              </label>
+            </fieldset>
+
+            <!-- ============ Actions ============ -->
+            <div class="ira-form__actions">
+              <button type="submit" class="ira-btn ira-btn--primary" id="submitBtn">
+                Envoyer ma demande
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </button>
+              <p class="ira-note">Réponse sous 48 heures ouvrées. Premier échange sans engagement.</p>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+      <!-- =====================================================
+           ASIDE
+           ===================================================== -->
+      <aside class="ira-aside" aria-label="Informations complémentaires">
+
+        <!-- Ce qui se passe ensuite -->
+        <div class="ira-aside__card">
+          <h3>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Ce qui se passe ensuite
+          </h3>
+
+          <div class="ira-aside__step">
+            <span class="n">1.</span>
+            <div><strong>Accusé de réception</strong> Sous 48 h ouvrées, avec une première lecture de votre besoin.</div>
+          </div>
+          <div class="ira-aside__step">
+            <span class="n">2.</span>
+            <div><strong>Échange exploratoire</strong> 30 minutes en visioconférence pour clarifier les objectifs et contraintes.</div>
+          </div>
+          <div class="ira-aside__step">
+            <span class="n">3.</span>
+            <div><strong>Proposition d'approche</strong> Note méthodologique et budgétaire, sans engagement.</div>
+          </div>
+        </div>
+
+        <!-- Contact direct -->
+        <div class="ira-aside__card ira-aside__card--dark">
+          <h3>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Contact direct
+          </h3>
+
+          <div class="ira-aside__contact">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span><a href="mailto:contact@ira-advisory.cd">contact@ira-advisory.cd</a></span>
+          </div>
+
+          <div class="ira-aside__contact">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span><a href="tel:+243000000000">+243 000 000 000</a></span>
+          </div>
+
+          <div class="ira-aside__contact">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Kinshasa, République démocratique du Congo</span>
+          </div>
+        </div>
+
+        <!-- Confidentialité -->
+        <div class="ira-aside__card">
+          <h3>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Confidentialité
+          </h3>
+          <p style="font-size:.88rem;font-weight:300;line-height:1.6;color:var(--ira-muted);margin:0;">
+            Vos informations restent strictement confidentielles. Elles ne sont utilisées
+            que pour traiter votre demande et ne sont jamais transmises à des tiers.
+          </p>
+        </div>
+
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER (injecté) -->
+<div id="site-footer"></div>
+
+<script>
+/* =========================================================
+   INJECTION HEADER + FOOTER
+   ========================================================= */
+document.addEventListener("DOMContentLoaded", function () {
+  fetch("/components/header.html")
+    .then(function (r) { return r.ok ? r.text() : ""; })
+    .then(function (html) { if (html) document.getElementById("site-header").innerHTML = html; })
+    .catch(function () {});
+
+  fetch("/components/footer.html")
+    .then(function (r) { return r.ok ? r.text() : ""; })
+    .then(function (html) { if (html) document.getElementById("site-footer").innerHTML = html; })
+    .catch(function () {});
+});
+
+/* =========================================================
+   SOUMISSION DU FORMULAIRE
+   ========================================================= */
+(function () {
+  const form    = document.getElementById('consultForm');
+  const card    = document.getElementById('formCard');
+  const success = document.getElementById('formSuccess');
+  const btn     = document.getElementById('submitBtn');
+
+  if (!form) return;
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    /* --- Validation HTML5 native --- */
+    if (!form.checkValidity()) {
+      const firstInvalid = form.querySelector(':invalid');
+      if (firstInvalid) {
+        firstInvalid.focus({ preventScroll: false });
+        firstInvalid.reportValidity();
+        firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return;
     }
-    shuffle();
-  </script>
+
+    /* --- État de chargement --- */
+    const originalHTML = btn.innerHTML;
+    btn.disabled = true;
+    btn.textContent = 'Envoi en cours…';
+
+    /* --- Récupération des données (prête à brancher sur un backend) --- */
+    const data = Object.fromEntries(new FormData(form).entries());
+    console.log('Données du formulaire :', data);
+
+    /* --- À REMPLACER par un vrai appel réseau ---
+       fetch('/api/consultations', {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify(data)
+       })
+       .then(r => { if (!r.ok) throw new Error('Erreur serveur'); return r.json(); })
+       .then(() => showSuccess())
+       .catch(err => { alert('Une erreur est survenue. Merci de réessayer.'); resetBtn(); });
+    ------------------------------------------------------ */
+
+    // Simulation d'un envoi réussi (à retirer en production)
+    setTimeout(function () {
+      showSuccess();
+    }, 700);
+
+    function showSuccess() {
+      card.style.display = 'none';
+      success.classList.add('is-visible');
+      success.setAttribute('aria-hidden', 'false');
+      window.scrollTo({ top: success.getBoundingClientRect().top + window.scrollY - 120, behavior: 'smooth' });
+    }
+
+    function resetBtn() {
+      btn.disabled = false;
+      btn.innerHTML = originalHTML;
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
