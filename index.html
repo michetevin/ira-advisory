@@ -312,24 +312,32 @@ a   { color: inherit; text-decoration: none; }
 }
 
 /* Visuel d'ouverture de la section Expertises
-   → hauteur fixe 450px desktop / 300px mobile, pleine largeur */
+   → l'image entière reste visible, hauteur max ~350px desktop / 250px mobile */
 .ira-expertise__figure{
   margin: 0 0 clamp(2.5rem, 5vw, 4rem);
   border-radius: var(--ira-radius);
   overflow: hidden;
   background: #e6e1d8;
+  max-height: 350px;              /* plafond desktop */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .ira-expertise__figure img{
   display: block;
-  width: 100%;
-  height: 450px;
-  object-fit: cover;
-  object-position: center;
+  max-width: 100%;
+  max-height: 350px;              /* l'image ne dépasse jamais 350px de haut */
+  width: auto;
+  height: auto;
+  object-fit: contain;            /* préserve l'intégralité de la photo */
 }
 
 @media (max-width: 720px){
+  .ira-expertise__figure{
+    max-height: 250px;
+  }
   .ira-expertise__figure img{
-    height: 300px;
+    max-height: 250px;
   }
 }
 
@@ -604,7 +612,7 @@ a   { color: inherit; text-decoration: none; }
 <section class="ira-expertise" id="expertises">
   <div class="ira-wrap">
 
-    <!-- Visuel d'ouverture de la section (hauteur fixe 450px / 300px mobile) -->
+    <!-- Visuel d'ouverture de la section (image entière visible, hauteur max 350px desktop) -->
     <figure class="ira-expertise__figure">
       <img src="/images/women-working.jpg"
            alt="Équipe IRA au travail"
