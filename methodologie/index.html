@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Méthodologie — IRA | Impact Research &amp; Advisory</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Playball&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================================
+   IRA — GLOBAL
+   ========================================================= */
+*, *::before, *::after { box-sizing: border-box; }
+
+:root{
+  --ira-bg:     #f7f4ef;
+  --ira-bg-alt: #ffffff;
+  --ira-ink:    #101c2c;
+  --green:      #2c7a3e;
+  --night:      #0f1e3d;
+  --ira-green:  #0a2e0a;
+  --ira-muted:  #5b6472;
+  --ira-line:   #e6e1d8;
+  --ira-radius: 6px;
+  --ira-max:    1200px;
+}
+
+html { scroll-behavior: smooth; }
+
+body{
+  margin: 0;
+  background: var(--ira-bg);
+  color: var(--ira-ink);
+  font-family: "Lexend", "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img { max-width: 100%; display: block; }
+a   { color: inherit; text-decoration: none; }
+
+.ira-wrap{
+  width: min(100% - 40px, var(--ira-max));
+  margin-inline: auto;
+}
+
+/* ---------- ancrages ---------- */
+#principes,
+#deroulement{
+  scroll-margin-top: 100px;
+}
+
+/* ---------- boutons ---------- */
+.ira-btn{
+  display: inline-flex;
+  align-items: center;
+  gap: .55em;
+  padding: 1rem 1.7rem;
+  border-radius: var(--ira-radius);
+  font-family: "Lexend", sans-serif;
+  font-weight: 500;
+  font-size: .95rem;
+  letter-spacing: .01em;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: transform .2s ease, background-color .25s ease, color .25s ease, border-color .25s ease;
+  white-space: nowrap;
+}
+.ira-btn:hover { transform: translateY(-2px); }
+
+.ira-btn--primary{ background: var(--green); color: #fff; border-color: var(--green); }
+.ira-btn--primary:hover{ background: var(--night); border-color: var(--night); }
+
+.ira-btn--light{ background: transparent; color: #fff; border-color: rgba(255,255,255,.7); }
+.ira-btn--light:hover{ background: #fff; color: var(--green); }
+
+/* ---------- titres ---------- */
+.ira-title{
+  font-family: "Lexend", sans-serif;
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  line-height: 1.15;
+  font-weight: 600;
+  margin: 0 0 1rem;
+  letter-spacing: -.02em;
+  color: var(--night);
+}
+
+.ira-lead{
+  font-family: "Lexend", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: var(--ira-muted);
+  max-width: 62ch;
+  margin: 0;
+}
+
+/* ---------- eyebrow ---------- */
+.ira-eyebrow{
+  display: inline-flex;
+  align-items: center;
+  gap: .7rem;
+  font-family: "Lexend", sans-serif;
+  font-size: .76rem;
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin: 0 0 1.2rem;
+}
+.ira-eyebrow::before{
+  content: "";
+  width: 30px;
+  height: 1.5px;
+  background: var(--green);
+  display: block;
+}
+
+/* ---------- trait de section ---------- */
+.ira-section-line{
+  display: block;
+  width: 44px;
+  height: 2px;
+  background: var(--green);
+  border-radius: 2px;
+  margin: 0 0 1.4rem;
+}
+
+/* =========================================================
+   EN-TÊTE DE PAGE
+   ========================================================= */
+.ira-pagehero{
+  background: var(--ira-bg-alt);
+  padding: clamp(56px, 8vw, 110px) 0 clamp(56px, 8vw, 100px);
+  border-bottom: 1px solid var(--ira-line);
+}
+.ira-pagehero__inner{ max-width: 900px; }
+
+.ira-pagehero__title{
+  font-family: "Lexend", sans-serif;
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  line-height: 1.12;
+  font-weight: 600;
+  letter-spacing: -.025em;
+  color: var(--night);
+  margin: 0 0 1.6rem;
+}
+.ira-pagehero__lead{
+  font-family: "Lexend", sans-serif;
+  font-size: clamp(1.02rem, 1.5vw, 1.18rem);
+  font-weight: 300;
+  color: var(--ira-muted);
+  max-width: 68ch;
+  margin: 0 0 1.1rem;
+}
+.ira-pagehero__lead:last-child{ margin-bottom: 0; }
+.ira-pagehero__lead strong{ font-weight: 500; color: var(--green); }
+
+/* =========================================================
+   5.1 — PRINCIPES MÉTHODOLOGIQUES
+   ========================================================= */
+.ira-principles{
+  background: var(--ira-bg);
+  padding: clamp(70px, 10vw, 130px) 0;
+}
+
+.ira-principles__head{ max-width: 780px; margin-bottom: 3.2rem; }
+
+.ira-principles__grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.4rem;
+}
+
+.ira-principle{
+  background: var(--ira-bg-alt);
+  border: 1px solid var(--ira-line);
+  border-radius: var(--ira-radius);
+  padding: 2.2rem 2rem;
+  transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+.ira-principle:hover{
+  border-color: var(--green);
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px -24px rgba(15,30,61,.25);
+}
+
+.ira-principle__num{
+  font-family: "DM Serif Display", serif;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--green);
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.ira-principle h3{
+  font-family: "Lexend", sans-serif;
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: -.015em;
+  color: var(--night);
+  margin: 0 0 .8rem;
+}
+
+.ira-principle p{
+  font-family: "Lexend", sans-serif;
+  font-size: .95rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--ira-muted);
+  margin: 0;
+}
+
+/* =========================================================
+   5.2 — DÉROULEMENT D'UNE MISSION (timeline)
+   ========================================================= */
+.ira-process{
+  background: var(--ira-bg-alt);
+  padding: clamp(70px, 10vw, 130px) 0;
+  border-top: 1px solid var(--ira-line);
+}
+
+.ira-process__head{ max-width: 780px; margin-bottom: 3.2rem; }
+
+.ira-steps{
+  position: relative;
+  max-width: 880px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* trait vertical continu */
+.ira-steps::before{
+  content: "";
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: 33px;
+  width: 2px;
+  background: var(--ira-line);
+}
+
+.ira-step{
+  position: relative;
+  display: grid;
+  grid-template-columns: 68px 1fr;
+  gap: 1.4rem;
+  padding: 1.6rem 0;
+}
+.ira-step + .ira-step{ border-top: 1px dashed transparent; }
+
+.ira-step__num{
+  position: relative;
+  z-index: 1;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: var(--ira-bg);
+  border: 2px solid var(--green);
+  color: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "DM Serif Display", serif;
+  font-size: 1.5rem;
+  line-height: 1;
+  transition: background .25s ease, color .25s ease, transform .25s ease;
+}
+.ira-step:hover .ira-step__num{
+  background: var(--green);
+  color: #fff;
+  transform: scale(1.05);
+}
+
+.ira-step__body{
+  padding-top: .35rem;
+}
+
+.ira-step__title{
+  font-family: "Lexend", sans-serif;
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: -.015em;
+  color: var(--night);
+  margin: 0 0 .5rem;
+}
+
+.ira-step__desc{
+  font-family: "Lexend", sans-serif;
+  font-size: .96rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--ira-muted);
+  margin: 0;
+  max-width: 62ch;
+}
+
+/* =========================================================
+   BANDEAU CITATION / ENGAGEMENT
+   ========================================================= */
+.ira-quote{
+  background: var(--night);
+  color: #fff;
+  padding: clamp(60px, 8vw, 100px) 0;
+  text-align: center;
+}
+.ira-quote__inner{
+  max-width: 820px;
+  margin-inline: auto;
+}
+.ira-quote__mark{
+  font-family: "DM Serif Display", serif;
+  font-size: 3.4rem;
+  line-height: 1;
+  color: #8fd49e;
+  display: block;
+  margin-bottom: 1rem;
+}
+.ira-quote p{
+  font-family: "Lexend", sans-serif;
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  font-weight: 300;
+  line-height: 1.5;
+  color: #fff;
+  margin: 0;
+}
+.ira-quote p strong{ font-weight: 500; color: #8fd49e; }
+
+/* =========================================================
+   APPEL FINAL
+   ========================================================= */
+.ira-final{
+  background: var(--green);
+  color: #fff;
+  padding: clamp(70px, 10vw, 120px) 0;
+  text-align: center;
+}
+.ira-final__inner{
+  max-width: 760px;
+  margin-inline: auto;
+}
+.ira-final h2{
+  font-family: "Lexend", sans-serif;
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  line-height: 1.2;
+  font-weight: 600;
+  margin: 0 0 1.2rem;
+  letter-spacing: -.02em;
+}
+.ira-final p{
+  font-family: "Lexend", sans-serif;
+  font-size: 1.02rem;
+  font-weight: 300;
+  color: rgba(255,255,255,.9);
+  margin: 0 0 2.2rem;
+}
+.ira-final .ira-btn--light{ border-color: #fff; }
+.ira-final .ira-btn--light:hover{ background: #fff; color: var(--green); }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 820px){
+  .ira-principles__grid{ grid-template-columns: 1fr; }
+
+  .ira-steps::before{ left: 25px; }
+  .ira-step{
+    grid-template-columns: 52px 1fr;
+    gap: 1.1rem;
+    padding: 1.3rem 0;
+  }
+  .ira-step__num{
+    width: 52px;
+    height: 52px;
+    font-size: 1.2rem;
+  }
+  .ira-step__title{ font-size: 1.05rem; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER (injecté) -->
+<div id="site-header"></div>
+
+<!-- =========================================================
+     EN-TÊTE DE PAGE
+     ========================================================= -->
+<section class="ira-pagehero">
+  <div class="ira-wrap">
+    <div class="ira-pagehero__inner">
+      <p class="ira-eyebrow">Méthodologie</p>
+      <h1 class="ira-pagehero__title">Notre approche,<br>pensée pour durer.</h1>
+      <p class="ira-pagehero__lead">
+        Chaque mission repose sur des principes méthodologiques constants et
+        un déroulement structuré en six étapes — pour garantir la rigueur des
+        résultats et leur appropriation par nos partenaires.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     5.1 — NOS PRINCIPES MÉTHODOLOGIQUES
+     ========================================================= -->
+<section class="ira-principles" id="principes">
+  <div class="ira-wrap">
+
+    <div class="ira-principles__head">
+      <span class="ira-section-line" aria-hidden="true"></span>
+      <h2 class="ira-title">Nos principes méthodologiques</h2>
+      <p class="ira-lead">
+        Quatre engagements qui structurent la conduite de chacune de nos études,
+        de la formulation des questions de recherche jusqu'à la restitution finale.
+      </p>
+    </div>
+
+    <div class="ira-principles__grid">
+
+      <article class="ira-principle">
+        <span class="ira-principle__num">01</span>
+        <h3>Rigueur et transparence</h3>
+        <p>
+          Méthodes, hypothèses et limites de chaque étude sont explicitement
+          documentées, pour permettre à nos partenaires de juger pleinement
+          de la portée des résultats.
+        </p>
+      </article>
+
+      <article class="ira-principle">
+        <span class="ira-principle__num">02</span>
+        <h3>Approche mixte</h3>
+        <p>
+          Nous combinons méthodes quantitatives et qualitatives, en adaptant
+          l'équilibre à chaque question de recherche et au contexte
+          d'intervention.
+        </p>
+      </article>
+
+      <article class="ira-principle">
+        <span class="ira-principle__num">03</span>
+        <h3>Coproduction</h3>
+        <p>
+          Commanditaires, bénéficiaires et équipes de terrain sont impliqués
+          à chaque étape clé, pour ancrer les résultats dans la réalité
+          du terrain et en faciliter l'appropriation.
+        </p>
+      </article>
+
+      <article class="ira-principle">
+        <span class="ira-principle__num">04</span>
+        <h3>Indépendance du jugement</h3>
+        <p>
+          Chaque livrable est soumis à une revue scientifique conduite par un
+          comité indépendant de toute pression commerciale ou contrainte
+          contractuelle.
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     5.2 — LE DÉROULEMENT D'UNE MISSION
+     ========================================================= -->
+<section class="ira-process" id="deroulement">
+  <div class="ira-wrap">
+
+    <div class="ira-process__head">
+      <span class="ira-section-line" aria-hidden="true"></span>
+      <h2 class="ira-title">Le déroulement d'une mission</h2>
+      <p class="ira-lead">
+        Six étapes, de la compréhension du besoin initial jusqu'à la capitalisation
+        des enseignements au service des missions futures.
+      </p>
+    </div>
+
+    <ol class="ira-steps">
+
+      <li class="ira-step">
+        <span class="ira-step__num">1</span>
+        <div class="ira-step__body">
+          <h3 class="ira-step__title">Cadrage</h3>
+          <p class="ira-step__desc">
+            Compréhension du besoin, définition conjointe des questions de recherche
+            et du protocole méthodologique.
+          </p>
+        </div>
+      </li>
+
+      <li class="ira-step">
+        <span class="ira-step__num">2</span>
+        <div class="ira-step__body">
+          <h3 class="ira-step__title">Collecte</h3>
+          <p class="ira-step__desc">
+            Collecte de données sur le terrain, avec un contrôle qualité continu.
+          </p>
+        </div>
+      </li>
+
+      <li class="ira-step">
+        <span class="ira-step__num">3</span>
+        <div class="ira-step__body">
+          <h3 class="ira-step__title">Analyse</h3>
+          <p class="ira-step__desc">
+            Traitement et analyse rigoureuse des données, en équipe pluridisciplinaire.
+          </p>
+        </div>
+      </li>
+
+      <li class="ira-step">
+        <span class="ira-step__num">4</span>
+        <div class="ira-step__body">
+          <h3 class="ira-step__title">Revue qualité</h3>
+          <p class="ira-step__desc">
+            Relecture méthodologique indépendante par le Comité Scientifique et
+            d'Assurance Qualité.
+          </p>
+        </div>
+      </li>
+
+      <li class="ira-step">
+        <span class="ira-step__num">5</span>
+        <div class="ira-step__body">
+          <h3 class="ira-step__title">Restitution</h3>
+          <p class="ira-step__desc">
+            Présentation des résultats, adaptée à chaque public — décideurs,
+            équipes techniques, bénéficiaires.
+          </p>
+        </div>
+      </li>
+
+      <li class="ira-step">
+        <span class="ira-step__num">6</span>
+        <div class="ira-step__body">
+          <h3 class="ira-step__title">Capitalisation</h3>
+          <p class="ira-step__desc">
+            Valorisation des enseignements au service des missions futures et de
+            l'apprentissage collectif.
+          </p>
+        </div>
+      </li>
+
+    </ol>
+  </div>
+</section>
+
+<!-- =========================================================
+     BANDEAU CITATION / ENGAGEMENT
+     ========================================================= -->
+<section class="ira-quote" aria-label="Notre engagement méthodologique">
+  <div class="ira-wrap">
+    <div class="ira-quote__inner">
+      <span class="ira-quote__mark" aria-hidden="true">&ldquo;</span>
+      <p>
+        La qualité d'une étude ne se mesure pas seulement à ses résultats,
+        mais à la <strong>confiance</strong> qu'elle inspire et à
+        l'<strong>usage</strong> qui en est fait.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     APPEL FINAL
+     ========================================================= -->
+<section class="ira-final">
+  <div class="ira-wrap">
+    <div class="ira-final__inner">
+      <h2>Une mission à cadrer avec rigueur&nbsp;?</h2>
+      <p>
+        Parlons de votre projet — nous vous proposons un premier échange pour
+        définir ensemble les questions de recherche et l'approche méthodologique
+        les plus adaptées.
+      </p>
+      <a href="/consultations" class="ira-btn ira-btn--light">
+        Demander une consultation
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER (injecté) -->
+<div id="site-footer"></div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    fetch("/components/header.html")
+      .then(function (r) { return r.ok ? r.text() : ""; })
+      .then(function (html) { if (html) document.getElementById("site-header").innerHTML = html; })
+      .catch(function () {});
+
+    fetch("/components/footer.html")
+      .then(function (r) { return r.ok ? r.text() : ""; })
+      .then(function (html) { if (html) document.getElementById("site-footer").innerHTML = html; })
+      .catch(function () {});
+  });
+</script>
+
+</body>
+</html>
