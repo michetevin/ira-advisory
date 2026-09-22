@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Expertises — IRA | Impact Research &amp; Advisory</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Playball&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================================
+   IRA — GLOBAL
+   ========================================================= */
+*, *::before, *::after { box-sizing: border-box; }
+
+:root{
+  --ira-bg:     #f7f4ef;
+  --ira-bg-alt: #ffffff;
+  --ira-ink:    #101c2c;
+  --green:      #2c7a3e;
+  --night:      #0f1e3d;
+  --ira-green:  #0a2e0a;
+  --ira-muted:  #5b6472;
+  --ira-line:   #e6e1d8;
+  --ira-radius: 6px;
+  --ira-max:    1200px;
+}
+
+html { scroll-behavior: smooth; }
+
+body{
+  margin: 0;
+  background: var(--ira-bg);
+  color: var(--ira-ink);
+  font-family: "Lexend", "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img { max-width: 100%; display: block; }
+a   { color: inherit; text-decoration: none; }
+
+.ira-wrap{
+  width: min(100% - 40px, var(--ira-max));
+  margin-inline: auto;
+}
+
+/* ---------- ancrages (compensation header fixe) ---------- */
+#recherche,
+#evaluation,
+#conseil-data,
+#formation,
+#data-collecte{
+  scroll-margin-top: 100px;
+}
+
+/* ---------- boutons ---------- */
+.ira-btn{
+  display: inline-flex;
+  align-items: center;
+  gap: .55em;
+  padding: 1rem 1.7rem;
+  border-radius: var(--ira-radius);
+  font-family: "Lexend", sans-serif;
+  font-weight: 500;
+  font-size: .95rem;
+  letter-spacing: .01em;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: transform .2s ease, background-color .25s ease, color .25s ease, border-color .25s ease;
+  white-space: nowrap;
+}
+.ira-btn:hover { transform: translateY(-2px); }
+
+.ira-btn--primary{ background: var(--green); color: #fff; border-color: var(--green); }
+.ira-btn--primary:hover{ background: var(--night); border-color: var(--night); }
+
+.ira-btn--ghost{ background: transparent; color: var(--night); border-color: var(--night); }
+.ira-btn--ghost:hover{ background: var(--night); color: #fff; }
+
+.ira-btn--light{ background: transparent; color: #fff; border-color: rgba(255,255,255,.7); }
+.ira-btn--light:hover{ background: #fff; color: var(--green); }
+
+/* ---------- titres ---------- */
+.ira-title{
+  font-family: "Lexend", sans-serif;
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  line-height: 1.15;
+  font-weight: 600;
+  margin: 0 0 1rem;
+  letter-spacing: -.02em;
+  color: var(--night);
+}
+
+.ira-lead{
+  font-family: "Lexend", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: var(--ira-muted);
+  max-width: 62ch;
+  margin: 0;
+}
+
+/* ---------- eyebrow (hero) ---------- */
+.ira-eyebrow{
+  display: inline-flex;
+  align-items: center;
+  gap: .7rem;
+  font-family: "Lexend", sans-serif;
+  font-size: .76rem;
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin: 0 0 1.2rem;
+}
+.ira-eyebrow::before{
+  content: "";
+  width: 30px;
+  height: 1.5px;
+  background: var(--green);
+  display: block;
+}
+
+/* ---------- trait de section ---------- */
+.ira-section-line{
+  display: block;
+  width: 44px;
+  height: 2px;
+  background: var(--green);
+  border-radius: 2px;
+  margin: 0 0 1.4rem;
+}
+
+/* =========================================================
+   EN-TÊTE DE PAGE
+   ========================================================= */
+.ira-pagehero{
+  background: var(--ira-bg-alt);
+  padding: clamp(56px, 8vw, 110px) 0 clamp(56px, 8vw, 100px);
+  border-bottom: 1px solid var(--ira-line);
+}
+.ira-pagehero__inner{ max-width: 900px; }
+
+.ira-pagehero__title{
+  font-family: "Lexend", sans-serif;
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  line-height: 1.12;
+  font-weight: 600;
+  letter-spacing: -.025em;
+  color: var(--night);
+  margin: 0 0 1.6rem;
+}
+.ira-pagehero__lead{
+  font-family: "Lexend", sans-serif;
+  font-size: clamp(1.02rem, 1.5vw, 1.18rem);
+  font-weight: 300;
+  color: var(--ira-muted);
+  max-width: 68ch;
+  margin: 0 0 1.1rem;
+}
+.ira-pagehero__lead:last-child{ margin-bottom: 0; }
+.ira-pagehero__lead strong{ font-weight: 500; color: var(--green); }
+
+/* =========================================================
+   BLOC EXPERTISE
+   ========================================================= */
+.ira-expertise{
+  padding: clamp(60px, 9vw, 120px) 0;
+  border-top: 1px solid var(--ira-line);
+}
+.ira-expertise:nth-of-type(odd){
+  background: var(--ira-bg);
+}
+.ira-expertise:nth-of-type(even){
+  background: var(--ira-bg-alt);
+}
+
+.ira-expertise__row{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+
+/* alternance : sur les blocs pairs, l'image passe à droite */
+.ira-expertise--reverse .ira-expertise__media{ order: 2; }
+.ira-expertise--reverse .ira-expertise__content{ order: 1; }
+
+.ira-expertise__media{
+  position: relative;
+  border-radius: var(--ira-radius);
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: var(--ira-line);
+  box-shadow: 0 24px 60px -32px rgba(15,30,61,.28);
+}
+.ira-expertise__media img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .5s ease;
+}
+.ira-expertise__media:hover img{
+  transform: scale(1.04);
+}
+
+.ira-expertise__content{ max-width: 560px; }
+
+.ira-expertise__desc{
+  font-family: "Lexend", sans-serif;
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--ira-ink);
+  margin: 0 0 1.8rem;
+}
+
+.ira-expertise__list{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ira-expertise__list li{
+  position: relative;
+  padding: .55rem 0 .55rem 1.6rem;
+  font-family: "Lexend", sans-serif;
+  font-size: .96rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--ira-muted);
+  border-bottom: 1px solid var(--ira-line);
+}
+.ira-expertise__list li:last-child{ border-bottom: 0; }
+.ira-expertise__list li::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1.05rem;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+/* =========================================================
+   APPEL FINAL
+   ========================================================= */
+.ira-final{
+  background: var(--green);
+  color: #fff;
+  padding: clamp(70px, 10vw, 120px) 0;
+  text-align: center;
+}
+.ira-final__inner{
+  max-width: 760px;
+  margin-inline: auto;
+}
+.ira-final h2{
+  font-family: "Lexend", sans-serif;
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  line-height: 1.2;
+  font-weight: 600;
+  margin: 0 0 1.2rem;
+  letter-spacing: -.02em;
+}
+.ira-final p{
+  font-family: "Lexend", sans-serif;
+  font-size: 1.02rem;
+  font-weight: 300;
+  color: rgba(255,255,255,.9);
+  margin: 0 0 2.2rem;
+}
+.ira-final .ira-btn--light{ border-color: #fff; }
+.ira-final .ira-btn--light:hover{ background: #fff; color: var(--green); }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 900px){
+  .ira-expertise__row{
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .ira-expertise--reverse .ira-expertise__media,
+  .ira-expertise--reverse .ira-expertise__content{
+    order: initial;
+  }
+  .ira-expertise__content{ max-width: none; }
+  .ira-expertise__media{ aspect-ratio: 16 / 10; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER (injecté) -->
+<div id="site-header"></div>
+
+<!-- =========================================================
+     EN-TÊTE DE PAGE
+     ========================================================= -->
+<section class="ira-pagehero">
+  <div class="ira-wrap">
+    <div class="ira-pagehero__inner">
+      <p class="ira-eyebrow">Expertises</p>
+      <h1 class="ira-pagehero__title">Cinq domaines,<br>une même exigence de preuve.</h1>
+      <p class="ira-pagehero__lead">
+        De la collecte de données sur le terrain jusqu'à l'appui stratégique,
+        IRA intervient sur toute la chaîne de valeur de l'évidence — avec des méthodes
+        éprouvées et adaptées à chaque contexte.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     1. DATA, COLLECTE & OUTILS NUMÉRIQUES
+     ========================================================= -->
+<section class="ira-expertise" id="data-collecte">
+  <div class="ira-wrap">
+    <div class="ira-expertise__row">
+
+      <div class="ira-expertise__media">
+        <img src="/images/Data-collecte-outils-numériques.jpg"
+             alt="Collecte de données et outils numériques — IRA">
+      </div>
+
+      <div class="ira-expertise__content">
+        <span class="ira-section-line" aria-hidden="true"></span>
+        <h2 class="ira-title">Data, collecte &amp; outils numériques</h2>
+        <p class="ira-expertise__desc">
+          Nous garantissons la fiabilité des données, de la collecte de terrain
+          jusqu'au tableau de bord de pilotage.
+        </p>
+        <ul class="ira-expertise__list">
+          <li>Conception d'outils de collecte électronique et supervision d'enquêtes de terrain</li>
+          <li>Contrôle qualité et nettoyage des données</li>
+          <li>Traitement statistique et économétrique</li>
+          <li>Tableaux de bord et solutions de visualisation de données</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     2. RECHERCHE APPLIQUÉE & ANALYSE SOCIO-ÉCONOMIQUE
+     ========================================================= -->
+<section class="ira-expertise ira-expertise--reverse" id="recherche">
+  <div class="ira-wrap">
+    <div class="ira-expertise__row">
+
+      <div class="ira-expertise__media">
+        <img src="/images/Recherche-appliquée-analyse-socio-économique.jpg"
+             alt="Recherche appliquée et analyse socio-économique — IRA">
+      </div>
+
+      <div class="ira-expertise__content">
+        <span class="ira-section-line" aria-hidden="true"></span>
+        <h2 class="ira-title">Recherche appliquée &amp; analyse socio-économique</h2>
+        <p class="ira-expertise__desc">
+          Nous concevons et conduisons des études, enquêtes et analyses socio-économiques
+          qui éclairent la conception de politiques, de programmes ou de stratégies
+          d'intervention.
+        </p>
+        <ul class="ira-expertise__list">
+          <li>Revues de littérature et diagnostics de contexte</li>
+          <li>Enquêtes quantitatives et qualitatives sur mesure</li>
+          <li>Analyses sectorielles et études de faisabilité</li>
+          <li>Notes d'orientation et publications de capitalisation des connaissances</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     3. ÉVALUATION D'IMPACT & SUIVI-ÉVALUATION
+     ========================================================= -->
+<section class="ira-expertise" id="evaluation">
+  <div class="ira-wrap">
+    <div class="ira-expertise__row">
+
+      <div class="ira-expertise__media">
+        <img src="/images/évaluation-d'impact-suivi-évaluation.jpg"
+             alt="Évaluation d'impact et suivi-évaluation — IRA">
+      </div>
+
+      <div class="ira-expertise__content">
+        <span class="ira-section-line" aria-hidden="true"></span>
+        <h2 class="ira-title">Évaluation d'impact &amp; suivi-évaluation</h2>
+        <p class="ira-expertise__desc">
+          Nous mesurons ce qui fonctionne réellement — et pourquoi — à l'aide d'approches
+          méthodologiques adaptées à chaque contexte : expérimentales, quasi-expérimentales
+          ou fondées sur la théorie du changement.
+        </p>
+        <ul class="ira-expertise__list">
+          <li>Évaluations d'impact de programmes et de politiques publiques</li>
+          <li>Conception de systèmes de suivi-évaluation et de cadres de résultats</li>
+          <li>Revues à mi-parcours et évaluations finales de projets</li>
+          <li>Appui à la gestion axée sur les résultats et à la redevabilité</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     4. CONSEIL STRATÉGIQUE & INSTITUTIONNEL
+     ========================================================= -->
+<section class="ira-expertise ira-expertise--reverse" id="conseil-data">
+  <div class="ira-wrap">
+    <div class="ira-expertise__row">
+
+      <div class="ira-expertise__media">
+        <img src="/images/Conseil-stratégique-institutionnel.jpg"
+             alt="Conseil stratégique et institutionnel — IRA">
+      </div>
+
+      <div class="ira-expertise__content">
+        <span class="ira-section-line" aria-hidden="true"></span>
+        <h2 class="ira-title">Conseil stratégique &amp; institutionnel</h2>
+        <p class="ira-expertise__desc">
+          Nous transformons les constats issus de la recherche en choix stratégiques
+          concrets, au service de la performance de nos partenaires.
+        </p>
+        <ul class="ira-expertise__list">
+          <li>Diagnostics organisationnels et institutionnels</li>
+          <li>Élaboration de stratégies et de plans d'action</li>
+          <li>Facilitation d'ateliers stratégiques et de restitution</li>
+          <li>Appui-conseil à la conception de programmes</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     5. FORMATION & RENFORCEMENT DES CAPACITÉS
+     ========================================================= -->
+<section class="ira-expertise" id="formation">
+  <div class="ira-wrap">
+    <div class="ira-expertise__row">
+
+      <div class="ira-expertise__media">
+        <img src="/images/Formation-renforcement-des-capacités.jpg"
+             alt="Formation et renforcement des capacités — IRA">
+      </div>
+
+      <div class="ira-expertise__content">
+        <span class="ira-section-line" aria-hidden="true"></span>
+        <h2 class="ira-title">Formation &amp; renforcement des capacités</h2>
+        <p class="ira-expertise__desc">
+          Nous transférons nos méthodes aux équipes de nos partenaires, pour renforcer
+          durablement leur autonomie.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     APPEL FINAL
+     ========================================================= -->
+<section class="ira-final">
+  <div class="ira-wrap">
+    <div class="ira-final__inner">
+      <h2>Un besoin qui touche l'un de ces domaines&nbsp;?</h2>
+      <p>
+        Décrivez-nous votre contexte — nous vous proposons un premier échange
+        pour identifier l'approche et les méthodes les plus adaptées.
+      </p>
+      <a href="/consultations" class="ira-btn ira-btn--light">
+        Demander une consultation
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER (injecté) -->
+<div id="site-footer"></div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    fetch("/components/header.html")
+      .then(function (r) { return r.ok ? r.text() : ""; })
+      .then(function (html) { if (html) document.getElementById("site-header").innerHTML = html; })
+      .catch(function () {});
+
+    fetch("/components/footer.html")
+      .then(function (r) { return r.ok ? r.text() : ""; })
+      .then(function (html) { if (html) document.getElementById("site-footer").innerHTML = html; })
+      .catch(function () {});
+  });
+</script>
+
+</body>
+</html>
