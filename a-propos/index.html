@@ -117,7 +117,7 @@ a   { color: inherit; text-decoration: none; }
   margin: 0;
 }
 
-/* ---------- eyebrow ---------- */
+/* ---------- eyebrow (hero uniquement) ---------- */
 .ira-eyebrow{
   display: inline-flex;
   align-items: center;
@@ -136,6 +136,16 @@ a   { color: inherit; text-decoration: none; }
   height: 1.5px;
   background: var(--green);
   display: block;
+}
+
+/* ---------- trait de section (repère vert avant chaque titre) ---------- */
+.ira-section-line{
+  display: block;
+  width: 44px;
+  height: 2px;
+  background: var(--green);
+  border-radius: 2px;
+  margin: 0 0 1.4rem;
 }
 
 /* =========================================================
@@ -212,18 +222,6 @@ a   { color: inherit; text-decoration: none; }
   background: #fff;
   transform: translateY(-4px);
   box-shadow: 0 18px 40px -24px rgba(15,30,61,.25);
-}
-.ira-mv__tag{
-  display: inline-flex;
-  align-items: center;
-  gap: .55rem;
-  font-family: "Lexend", sans-serif;
-  font-size: .74rem;
-  font-weight: 500;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--green);
-  margin: 0 0 1.1rem;
 }
 .ira-mv__card h3{
   font-family: "Lexend", sans-serif;
@@ -489,7 +487,7 @@ a   { color: inherit; text-decoration: none; }
   <div class="ira-wrap">
     <div class="ira-story__inner">
 
-      <p class="ira-eyebrow">Notre histoire</p>
+      <span class="ira-section-line" aria-hidden="true"></span>
       <h2 class="ira-title">D'où vient IRA</h2>
 
       <p class="ira-story__text">
@@ -513,14 +511,13 @@ a   { color: inherit; text-decoration: none; }
 <section class="ira-mv" id="mission-vision">
   <div class="ira-wrap">
 
-    <p class="ira-eyebrow">Mission &amp; Vision</p>
+    <span class="ira-section-line" aria-hidden="true"></span>
     <h2 class="ira-title">Ce que nous faisons,<br>ce que nous voulons devenir.</h2>
 
     <div class="ira-mv__grid">
 
       <!-- MISSION → #mission -->
       <article class="ira-mv__card" id="mission">
-        <p class="ira-mv__tag">Mission</p>
         <h3>Éclairer les décisions par la preuve</h3>
         <p>
           IRA accompagne les institutions publiques, les organisations de la société civile,
@@ -532,7 +529,6 @@ a   { color: inherit; text-decoration: none; }
 
       <!-- VISION → #vision -->
       <article class="ira-mv__card" id="vision">
-        <p class="ira-mv__tag">Vision</p>
         <h3>Une référence en Afrique centrale</h3>
         <p>
           Devenir un cabinet de référence en Afrique centrale pour la recherche appliquée,
@@ -552,7 +548,7 @@ a   { color: inherit; text-decoration: none; }
 <section class="ira-values" id="nos-valeurs">
   <div class="ira-wrap">
 
-    <p class="ira-eyebrow">Nos valeurs</p>
+    <span class="ira-section-line" aria-hidden="true"></span>
     <h2 class="ira-title">Cinq valeurs, tenues concrètement.</h2>
     <p class="ira-lead">
       Ce que chacune de nos valeurs signifie, en pratique, dans la conduite
@@ -611,7 +607,7 @@ a   { color: inherit; text-decoration: none; }
 <section class="ira-distinguish" id="ce-qui-nous-distingue">
   <div class="ira-wrap">
 
-    <p class="ira-eyebrow">Ce qui nous distingue</p>
+    <span class="ira-section-line" aria-hidden="true"></span>
     <h2 class="ira-title">Trois raisons de nous confier<br>vos décisions les plus exigeantes.</h2>
 
     <div class="ira-distinguish__grid">
