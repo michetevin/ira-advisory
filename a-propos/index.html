@@ -60,6 +60,16 @@ a   { color: inherit; text-decoration: none; }
   margin-inline: auto;
 }
 
+/* ---------- ancrages (compensation header fixe) ---------- */
+#notre-histoire,
+#mission,
+#vision,
+#nos-valeurs,
+#ce-qui-nous-distingue,
+#contact{
+  scroll-margin-top: 100px; /* header 82px + marge */
+}
+
 /* ---------- boutons ---------- */
 .ira-btn{
   display: inline-flex;
@@ -159,7 +169,7 @@ a   { color: inherit; text-decoration: none; }
 .ira-pagehero__lead strong{ font-weight: 500; color: var(--green); }
 
 /* =========================================================
-   3.1 — NOTRE HISTOIRE
+   NOTRE HISTOIRE
    ========================================================= */
 .ira-story{
   background: var(--ira-bg);
@@ -177,7 +187,7 @@ a   { color: inherit; text-decoration: none; }
 .ira-story__text:last-child{ margin-bottom: 0; }
 
 /* =========================================================
-   3.2 / 3.3 — MISSION & VISION
+   MISSION & VISION
    ========================================================= */
 .ira-mv{
   background: var(--ira-bg-alt);
@@ -215,12 +225,6 @@ a   { color: inherit; text-decoration: none; }
   color: var(--green);
   margin: 0 0 1.1rem;
 }
-.ira-mv__tag span{
-  font-family: "DM Serif Display", serif;
-  font-size: 1rem;
-  letter-spacing: 0;
-  color: var(--green);
-}
 .ira-mv__card h3{
   font-family: "Lexend", sans-serif;
   font-size: 1.25rem;
@@ -239,7 +243,7 @@ a   { color: inherit; text-decoration: none; }
 }
 
 /* =========================================================
-   3.4 — NOS VALEURS
+   NOS VALEURS
    ========================================================= */
 .ira-values{
   background: var(--ira-bg);
@@ -289,7 +293,7 @@ a   { color: inherit; text-decoration: none; }
 }
 
 /* =========================================================
-   3.5 — CE QUI NOUS DISTINGUE
+   CE QUI NOUS DISTINGUE
    ========================================================= */
 .ira-distinguish{
   background: var(--ira-bg-alt);
@@ -428,6 +432,12 @@ a   { color: inherit; text-decoration: none; }
   .ira-value{ grid-template-columns: 1fr; gap: .7rem; padding: 1.6rem 0; }
   .ira-value:hover{ padding-left: 0; }
   .ira-value__name{ font-size: 1.2rem; }
+  #notre-histoire,
+  #mission,
+  #vision,
+  #nos-valeurs,
+  #ce-qui-nous-distingue,
+  #contact{ scroll-margin-top: 88px; }
 }
 
 @media (max-width: 720px){
@@ -447,7 +457,7 @@ a   { color: inherit; text-decoration: none; }
 
 <body>
 
-<!-- HEADER -->
+<!-- HEADER (injecté) -->
 <div id="site-header"></div>
 
 <!-- =========================================================
@@ -473,13 +483,13 @@ a   { color: inherit; text-decoration: none; }
 </section>
 
 <!-- =========================================================
-     3.1 — NOTRE HISTOIRE
+     NOTRE HISTOIRE  →  #notre-histoire
      ========================================================= -->
 <section class="ira-story" id="notre-histoire">
   <div class="ira-wrap">
     <div class="ira-story__inner">
 
-      <p class="ira-eyebrow">3.1 — Notre histoire</p>
+      <p class="ira-eyebrow">Notre histoire</p>
       <h2 class="ira-title">D'où vient IRA</h2>
 
       <p class="ira-story__text">
@@ -498,7 +508,7 @@ a   { color: inherit; text-decoration: none; }
 </section>
 
 <!-- =========================================================
-     3.2 / 3.3 — MISSION & VISION
+     MISSION & VISION  →  #mission  /  #vision
      ========================================================= -->
 <section class="ira-mv" id="mission-vision">
   <div class="ira-wrap">
@@ -508,9 +518,9 @@ a   { color: inherit; text-decoration: none; }
 
     <div class="ira-mv__grid">
 
-      <!-- 3.2 — MISSION -->
-      <article class="ira-mv__card">
-        <p class="ira-mv__tag"><span>3.2</span> Mission</p>
+      <!-- MISSION → #mission -->
+      <article class="ira-mv__card" id="mission">
+        <p class="ira-mv__tag">Mission</p>
         <h3>Éclairer les décisions par la preuve</h3>
         <p>
           IRA accompagne les institutions publiques, les organisations de la société civile,
@@ -520,9 +530,9 @@ a   { color: inherit; text-decoration: none; }
         </p>
       </article>
 
-      <!-- 3.3 — VISION -->
-      <article class="ira-mv__card">
-        <p class="ira-mv__tag"><span>3.3</span> Vision</p>
+      <!-- VISION → #vision -->
+      <article class="ira-mv__card" id="vision">
+        <p class="ira-mv__tag">Vision</p>
         <h3>Une référence en Afrique centrale</h3>
         <p>
           Devenir un cabinet de référence en Afrique centrale pour la recherche appliquée,
@@ -537,12 +547,12 @@ a   { color: inherit; text-decoration: none; }
 </section>
 
 <!-- =========================================================
-     3.4 — NOS VALEURS
+     NOS VALEURS  →  #nos-valeurs
      ========================================================= -->
-<section class="ira-values" id="valeurs">
+<section class="ira-values" id="nos-valeurs">
   <div class="ira-wrap">
 
-    <p class="ira-eyebrow">3.4 — Nos valeurs</p>
+    <p class="ira-eyebrow">Nos valeurs</p>
     <h2 class="ira-title">Cinq valeurs, tenues concrètement.</h2>
     <p class="ira-lead">
       Ce que chacune de nos valeurs signifie, en pratique, dans la conduite
@@ -596,12 +606,12 @@ a   { color: inherit; text-decoration: none; }
 </section>
 
 <!-- =========================================================
-     3.5 — CE QUI NOUS DISTINGUE
+     CE QUI NOUS DISTINGUE
      ========================================================= -->
 <section class="ira-distinguish" id="ce-qui-nous-distingue">
   <div class="ira-wrap">
 
-    <p class="ira-eyebrow">3.5 — Ce qui nous distingue</p>
+    <p class="ira-eyebrow">Ce qui nous distingue</p>
     <h2 class="ira-title">Trois raisons de nous confier<br>vos décisions les plus exigeantes.</h2>
 
     <div class="ira-distinguish__grid">
@@ -681,7 +691,7 @@ a   { color: inherit; text-decoration: none; }
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- FOOTER (injecté) -->
 <div id="site-footer"></div>
 
 <script>
