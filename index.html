@@ -178,7 +178,7 @@ a   { color: inherit; text-decoration: none; }
   );
 }
 
-/* --- motif d’icônes pro (derrière le texte, devant l’image) --- */
+/* --- motif d'icônes pro (derrière le texte, devant l'image) --- */
 .ira-slide__icons{
   position: absolute;
   inset: 0 auto 0 0;
@@ -207,27 +207,30 @@ a   { color: inherit; text-decoration: none; }
 }
 
 .ira-slide__panel{
-  max-width: 660px;
+  max-width: 680px;
   text-align: left;
   color: #fff;
 }
 
+/* Le titre est désormais la phrase descriptive (plus longue → taille ajustée) */
 .ira-slide__title{
   font-family: "Lexend", sans-serif;
   font-weight: 600;
-  font-size: clamp(1.6rem, 3.5vw, 2.85rem);
-  line-height: 1.12;
+  font-size: clamp(1.35rem, 2.8vw, 2.15rem);
+  line-height: 1.18;
   letter-spacing: -.02em;
   color: #fff;
   margin: 0 0 1rem;
 }
 
+/* Le sous-titre est désormais l'intitulé d'expertise → rôle de label */
 .ira-slide__desc{
   font-family: "Lexend", sans-serif;
-  font-weight: 300;
-  font-size: clamp(1rem, 1.35vw, 1.15rem);
-  line-height: 1.6;
-  color: rgba(255,255,255,.82);
+  font-weight: 500;
+  font-size: clamp(.95rem, 1.25vw, 1.1rem);
+  line-height: 1.5;
+  letter-spacing: .01em;
+  color: #8fd49e;
   margin: 0 0 2rem;
   max-width: 46ch;
 }
@@ -401,8 +404,8 @@ a   { color: inherit; text-decoration: none; }
 }
 
 @media (max-width: 420px){
-  .ira-slide__title{ font-size: 1.45rem; }
-  .ira-slide__desc{ font-size: .95rem; }
+  .ira-slide__title{ font-size: 1.25rem; }
+  .ira-slide__desc{ font-size: .9rem; }
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -585,13 +588,13 @@ a   { color: inherit; text-decoration: none; }
 }
 
 /* =========================================================
-   2.4 — APPROCHE
+   2.4 — APPROCHE (fond bleu clair)
    ========================================================= */
 .ira-approach{
   position: relative;
   padding: clamp(80px, 11vw, 150px) 0;
-  background: var(--night);
-  color: #fff;
+  background: #eaf1fa;              /* bleu très clair, tend vers le blanc */
+  color: var(--night);
   overflow: hidden;
 }
 .ira-approach::before{
@@ -600,15 +603,15 @@ a   { color: inherit; text-decoration: none; }
   background-image: url('/images/ira-workshop.jpg');
   background-size: cover;
   background-position: center;
-  opacity: .15;
+  opacity: .06;                     /* voile très léger */
   z-index: 0;
 }
 .ira-approach__inner{
   position: relative;
   z-index: 1;
 }
-.ira-approach .ira-title{ color: #fff; }
-.ira-approach .ira-lead{ color: rgba(255,255,255,.75); }
+.ira-approach .ira-title{ color: var(--night); }
+.ira-approach .ira-lead{ color: var(--ira-muted); }
 
 .ira-approach__grid{
   display: grid;
@@ -618,31 +621,34 @@ a   { color: inherit; text-decoration: none; }
 }
 .ira-approach__card{
   padding: 2rem 1.8rem;
-  border: 1px solid rgba(255,255,255,.18);
+  border: 1px solid rgba(15,30,61,.08);
   border-radius: var(--ira-radius);
-  background: rgba(255,255,255,.03);
-  transition: border-color .25s ease, background .25s ease, transform .25s ease;
+  background: #ffffff;
+  box-shadow: 0 12px 30px -22px rgba(15,30,61,.15);
+  transition: border-color .25s ease, background .25s ease, transform .25s ease, box-shadow .25s ease;
 }
 .ira-approach__card:hover{
   border-color: var(--green);
-  background: rgba(44,122,62,.12);
+  background: #ffffff;
   transform: translateY(-4px);
+  box-shadow: 0 18px 40px -22px rgba(15,30,61,.22);
 }
 .ira-approach__card .ira-why__icon{
-  background: rgba(44,122,62,.22);
-  color: #8fd49e;
+  background: rgba(44,122,62,.10);
+  color: var(--green);
 }
 .ira-approach__card h3{
   font-family: "Lexend", sans-serif;
   font-size: 1.15rem;
   font-weight: 500;
   margin: 0 0 .6rem;
+  color: var(--night);
 }
 .ira-approach__card p{
   font-family: "Lexend", sans-serif;
   font-size: .9rem;
   font-weight: 300;
-  color: rgba(255,255,255,.75);
+  color: var(--ira-muted);
   margin: 0;
 }
 .ira-approach__link{
@@ -653,14 +659,14 @@ a   { color: inherit; text-decoration: none; }
   font-family: "Lexend", sans-serif;
   font-weight: 500;
   font-size: .95rem;
-  color: #fff;
+  color: var(--night);
   border-bottom: 1.5px solid var(--green);
   padding-bottom: .25rem;
   transition: gap .25s ease, color .25s ease;
 }
 .ira-approach__link:hover{
   gap: .9rem;
-  color: #8fd49e;
+  color: var(--green);
 }
 .ira-approach__link svg{ width: 16px; height: 16px; }
 
@@ -717,7 +723,7 @@ a   { color: inherit; text-decoration: none; }
 
   <div class="ira-slider__viewport">
 
-    <!-- ---------- SLIDE 1 ---------- -->
+    <!-- ---------- SLIDE 1 (titre / sous-titre inversés) ---------- -->
     <article class="ira-slide is-active" role="group" aria-roledescription="diapositive" aria-label="1 sur 4">
       <div class="ira-slide__bg">
         <img src="/images/slider/recherche.jpg" alt="Recherche appliquée et analyse socio-économique" width="1920" height="1080">
@@ -742,8 +748,8 @@ a   { color: inherit; text-decoration: none; }
       </div>
       <div class="ira-wrap ira-slide__inner">
         <div class="ira-slide__panel">
-          <h2 class="ira-slide__title">Recherche appliquée &amp; analyse socio-économique</h2>
-          <p class="ira-slide__desc">Comprendre une réalité sociale ou économique pour éclairer une décision.</p>
+          <h2 class="ira-slide__title">Comprendre une réalité sociale ou économique pour éclairer une décision.</h2>
+          <p class="ira-slide__desc">Recherche appliquée &amp; analyse socio-économique</p>
           <a href="/expertises/" class="ira-slide__cta">
             Découvrir
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -752,7 +758,7 @@ a   { color: inherit; text-decoration: none; }
       </div>
     </article>
 
-    <!-- ---------- SLIDE 2 ---------- -->
+    <!-- ---------- SLIDE 2 (titre / sous-titre inversés) ---------- -->
     <article class="ira-slide" role="group" aria-roledescription="diapositive" aria-label="2 sur 4">
       <div class="ira-slide__bg">
         <img src="/images/slider/suivi.jpg" alt="Évaluation d'impact et suivi-évaluation" loading="lazy" width="1920" height="1080">
@@ -777,8 +783,8 @@ a   { color: inherit; text-decoration: none; }
       </div>
       <div class="ira-wrap ira-slide__inner">
         <div class="ira-slide__panel">
-          <h2 class="ira-slide__title">Évaluation d'impact &amp; suivi-évaluation</h2>
-          <p class="ira-slide__desc">Mesurer ce qui fonctionne réellement, et pourquoi.</p>
+          <h2 class="ira-slide__title">Mesurer ce qui fonctionne réellement, et pourquoi.</h2>
+          <p class="ira-slide__desc">Évaluation d'impact &amp; suivi-évaluation</p>
           <a href="/expertises/" class="ira-slide__cta">
             Découvrir
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -787,7 +793,7 @@ a   { color: inherit; text-decoration: none; }
       </div>
     </article>
 
-    <!-- ---------- SLIDE 3 ---------- -->
+    <!-- ---------- SLIDE 3 (titre / sous-titre inversés) ---------- -->
     <article class="ira-slide" role="group" aria-roledescription="diapositive" aria-label="3 sur 4">
       <div class="ira-slide__bg">
         <img src="/images/slider/formation.jpg" alt="Formation et renforcement des capacités" loading="lazy" width="1920" height="1080">
@@ -812,8 +818,8 @@ a   { color: inherit; text-decoration: none; }
       </div>
       <div class="ira-wrap ira-slide__inner">
         <div class="ira-slide__panel">
-          <h2 class="ira-slide__title">Formation &amp; renforcement des capacités</h2>
-          <p class="ira-slide__desc">Transférer nos méthodes aux équipes de nos partenaires.</p>
+          <h2 class="ira-slide__title">Transférer nos méthodes aux équipes de nos partenaires.</h2>
+          <p class="ira-slide__desc">Formation &amp; renforcement des capacités</p>
           <a href="/expertises/" class="ira-slide__cta">
             Découvrir
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -822,10 +828,10 @@ a   { color: inherit; text-decoration: none; }
       </div>
     </article>
 
-    <!-- ---------- SLIDE 4 — RÉVÉLATION + CTA LARGE ---------- -->
+    <!-- ---------- SLIDE 4 — CTA (image mise à jour) ---------- -->
     <article class="ira-slide" role="group" aria-roledescription="diapositive" aria-label="4 sur 4">
       <div class="ira-slide__bg">
-        <img src="/images/slider/preuves.jpg" alt="Des preuves solides pour vos décisions" loading="lazy" width="1920" height="1080">
+        <img src="/images/cta.jpg" alt="Des preuves solides pour vos décisions" loading="lazy" width="1920" height="1080">
       </div>
       <div class="ira-slide__scrim" aria-hidden="true"></div>
       <div class="ira-slide__icons" aria-hidden="true">
@@ -1018,7 +1024,7 @@ a   { color: inherit; text-decoration: none; }
   </div>
 </section>
 
-<!-- 2.4 — APPROCHE -->
+<!-- 2.4 — APPROCHE (fond bleu clair) -->
 <section class="ira-approach" id="approche">
   <div class="ira-wrap ira-approach__inner">
     <h2 class="ira-title">Trois principes, une seule finalité</h2>
@@ -1123,7 +1129,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var btnNext = slider.querySelector("[data-slider-next]");
   if (slides.length < 2) return;
 
-  var DURATION = 7000;         // temps entre deux diapositives (ms)
+  var DURATION = 7000;
   var index = 0;
   var timer = null;
   var paused = false;
@@ -1163,33 +1169,27 @@ document.addEventListener("DOMContentLoaded", function () {
     start();
   }
 
-  /* --- boutons --- */
   if (btnNext) btnNext.addEventListener("click", function () { next(true); });
   if (btnPrev) btnPrev.addEventListener("click", function () { prev(true); });
 
-  /* --- puces --- */
   dots.forEach(function (dot, i) {
     dot.addEventListener("click", function () { goTo(i, true); });
   });
 
-  /* --- clavier --- */
   slider.addEventListener("keydown", function (e) {
     if (e.key === "ArrowRight") { e.preventDefault(); next(true); }
     if (e.key === "ArrowLeft")  { e.preventDefault(); prev(true); }
   });
 
-  /* --- pause au survol / focus --- */
   slider.addEventListener("mouseenter", function () { paused = true; });
   slider.addEventListener("mouseleave", function () { paused = false; });
   slider.addEventListener("focusin",    function () { paused = true; });
   slider.addEventListener("focusout",   function () { paused = false; });
 
-  /* --- pause si l'onglet est masqué --- */
   document.addEventListener("visibilitychange", function () {
     paused = document.hidden;
   });
 
-  /* --- balayage tactile --- */
   var startX = 0, startY = 0, tracking = false;
   slider.addEventListener("touchstart", function (e) {
     var t = e.changedTouches[0];
@@ -1207,7 +1207,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }, { passive: true });
 
-  /* --- démarrage --- */
   render();
   start();
 })();
