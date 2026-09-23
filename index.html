@@ -162,61 +162,54 @@ a   { color: inherit; text-decoration: none; }
   to   { transform: scale(1); }
 }
 
-/* --- overlay : uniquement sur la zone de texte --- */
+/* --- overlay allégé : uniquement derrière le texte --- */
 .ira-slide__scrim{
   position: absolute;
   inset: 0 auto 0 0;
-  width: min(62%, 780px);
+  width: min(58%, 720px);
   pointer-events: none;
+  z-index: 1;
   background: linear-gradient(
     90deg,
-    rgba(8, 17, 36, .95) 0%,
-    rgba(8, 17, 36, .90) 52%,
-    rgba(8, 17, 36, .58) 80%,
+    rgba(8, 17, 36, .78) 0%,
+    rgba(8, 17, 36, .52) 42%,
+    rgba(8, 17, 36, .12) 78%,
     rgba(8, 17, 36, 0)  100%
   );
 }
-/* léger dégradé bas pour la lisibilité des flèches */
-.ira-slide__scrim::after{
-  content: "";
+
+/* --- motif d’icônes pro (derrière le texte, devant l’image) --- */
+.ira-slide__icons{
   position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 180px;
-  background: linear-gradient(to top, rgba(8,17,36,.45), rgba(8,17,36,0));
+  inset: 0 auto 0 0;
+  width: min(58%, 720px);
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+.ira-slide__icon{
+  position: absolute;
+  width: clamp(36px, 4.6vw, 68px);
+  height: auto;
+  color: #8fd49e;
+  opacity: .13;
 }
 
-/* --- contenu --- */
+/* --- contenu : texte en bas à gauche --- */
 .ira-slide__inner{
   position: relative;
   z-index: 3;
   height: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  padding-top: 80px;
+  padding-bottom: clamp(96px, 14vh, 170px);
 }
 
 .ira-slide__panel{
-  max-width: 620px;
-  text-align: left;      /* ← texte à gauche */
+  max-width: 660px;
+  text-align: left;
   color: #fff;
-}
-
-.ira-slide__index{
-  display: inline-flex;
-  align-items: center;
-  gap: 1rem;
-  font-family: "DM Serif Display", serif;
-  font-weight: 400;
-  font-size: clamp(1.9rem, 3.4vw, 2.9rem);
-  line-height: 1;
-  letter-spacing: .02em;
-  color: #8fd49e;
-  margin-bottom: 1.1rem;
-}
-.ira-slide__index::after{
-  content: "";
-  width: 64px;
-  height: 1px;
-  background: rgba(255,255,255,.4);
 }
 
 .ira-slide__title{
@@ -258,7 +251,52 @@ a   { color: inherit; text-decoration: none; }
 }
 .ira-slide__cta svg{ width: 15px; height: 15px; }
 
-/* --- contrôles --- */
+/* CTA large pour la slide finale */
+.ira-slide__cta--wide{
+  display: inline-flex;
+  align-items: center;
+  gap: .7rem;
+  padding: 1.05rem 2.4rem;
+  border-radius: var(--ira-radius);
+  background: var(--green);
+  border: 1.5px solid var(--green);
+  color: #fff;
+  font-weight: 500;
+  font-size: 1rem;
+  border-bottom: 1.5px solid var(--green);
+  transition: background .25s ease, border-color .25s ease, transform .25s ease, gap .25s ease;
+}
+.ira-slide__cta--wide:hover{
+  background: #fff;
+  border-color: #fff;
+  color: var(--green);
+  transform: translateY(-2px);
+  gap: 1rem;
+}
+.ira-slide__cta--wide svg{ width: 16px; height: 16px; }
+
+/* --- apparition du texte --- */
+@keyframes iraRevealUp{
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.ira-slide .ira-slide__title,
+.ira-slide .ira-slide__desc,
+.ira-slide .ira-slide__cta{
+  opacity: 0;
+  transform: translateY(28px);
+}
+.ira-slide.is-active .ira-slide__title{
+  animation: iraRevealUp .8s cubic-bezier(.22,.61,.36,1) .15s forwards;
+}
+.ira-slide.is-active .ira-slide__desc{
+  animation: iraRevealUp .8s cubic-bezier(.22,.61,.36,1) .3s forwards;
+}
+.ira-slide.is-active .ira-slide__cta{
+  animation: iraRevealUp .8s cubic-bezier(.22,.61,.36,1) .45s forwards;
+}
+
+/* --- navigation --- */
 .ira-slider__nav{
   position: absolute;
   z-index: 5;
@@ -299,8 +337,8 @@ a   { color: inherit; text-decoration: none; }
 .ira-slider__dots{
   position: absolute;
   z-index: 5;
-  left: max(20px, calc((100% - var(--ira-max)) / 2));
-  bottom: clamp(42px, 6vw, 68px);
+  right: max(20px, calc((100% - var(--ira-max)) / 2));
+  bottom: clamp(88px, 11vw, 124px);
   display: flex;
   align-items: center;
   gap: .55rem;
@@ -332,30 +370,33 @@ a   { color: inherit; text-decoration: none; }
   .ira-slide__scrim{
     inset: auto 0 0 0;
     width: 100%;
-    height: 80%;
+    height: 68%;
     background: linear-gradient(
       180deg,
       rgba(8,17,36,0)   0%,
-      rgba(8,17,36,.72) 42%,
-      rgba(8,17,36,.96) 100%
+      rgba(8,17,36,.45) 42%,
+      rgba(8,17,36,.78) 100%
     );
   }
-  .ira-slide__scrim::after{ display: none; }
+  .ira-slide__icons{
+    inset: auto 0 0 0;
+    width: 100%;
+    height: 68%;
+  }
   .ira-slide__inner{
     align-items: flex-end;
-    padding-top: 90px;
-    padding-bottom: 150px;
+    padding-top: 70px;
+    padding-bottom: 160px;
   }
   .ira-slide__panel{ max-width: 100%; }
-  .ira-slide__index::after{ width: 44px; }
   .ira-slider__nav{
     right: 20px;
     bottom: 22px;
   }
   .ira-slider__arrow{ width: 46px; height: 46px; }
   .ira-slider__dots{
-    left: 20px;
-    bottom: 40px;
+    right: 20px;
+    bottom: 84px;
   }
 }
 
@@ -370,6 +411,9 @@ a   { color: inherit; text-decoration: none; }
   .ira-slider__arrow,
   .ira-slider__dot{ transition: none !important; }
   .ira-slide.is-active .ira-slide__bg img{ animation: none; }
+  .ira-slide .ira-slide__title,
+  .ira-slide .ira-slide__desc,
+  .ira-slide .ira-slide__cta{ opacity: 1; transform: none; animation: none !important; }
 }
 
 /* =========================================================
@@ -674,14 +718,30 @@ a   { color: inherit; text-decoration: none; }
   <div class="ira-slider__viewport">
 
     <!-- ---------- SLIDE 1 ---------- -->
-    <article class="ira-slide is-active" role="group" aria-roledescription="diapositive" aria-label="1 sur 3">
+    <article class="ira-slide is-active" role="group" aria-roledescription="diapositive" aria-label="1 sur 4">
       <div class="ira-slide__bg">
         <img src="/images/slider/recherche.jpg" alt="Recherche appliquée et analyse socio-économique" width="1920" height="1080">
       </div>
       <div class="ira-slide__scrim" aria-hidden="true"></div>
+      <div class="ira-slide__icons" aria-hidden="true">
+        <svg class="ira-slide__icon" style="top:14%;left:6%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <svg class="ira-slide__icon" style="top:38%;left:22%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="8" width="3" height="10"/><rect x="17" y="5" width="3" height="13"/>
+        </svg>
+        <svg class="ira-slide__icon" style="top:66%;left:8%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+        </svg>
+        <svg class="ira-slide__icon" style="top:26%;left:44%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+        <svg class="ira-slide__icon" style="top:72%;left:48%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/>
+        </svg>
+      </div>
       <div class="ira-wrap ira-slide__inner">
         <div class="ira-slide__panel">
-          <span class="ira-slide__index">01</span>
           <h2 class="ira-slide__title">Recherche appliquée &amp; analyse socio-économique</h2>
           <p class="ira-slide__desc">Comprendre une réalité sociale ou économique pour éclairer une décision.</p>
           <a href="/expertises/" class="ira-slide__cta">
@@ -693,14 +753,30 @@ a   { color: inherit; text-decoration: none; }
     </article>
 
     <!-- ---------- SLIDE 2 ---------- -->
-    <article class="ira-slide" role="group" aria-roledescription="diapositive" aria-label="2 sur 3">
+    <article class="ira-slide" role="group" aria-roledescription="diapositive" aria-label="2 sur 4">
       <div class="ira-slide__bg">
         <img src="/images/slider/suivi.jpg" alt="Évaluation d'impact et suivi-évaluation" loading="lazy" width="1920" height="1080">
       </div>
       <div class="ira-slide__scrim" aria-hidden="true"></div>
+      <div class="ira-slide__icons" aria-hidden="true">
+        <svg class="ira-slide__icon" style="top:14%;left:6%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <svg class="ira-slide__icon" style="top:38%;left:22%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="8" width="3" height="10"/><rect x="17" y="5" width="3" height="13"/>
+        </svg>
+        <svg class="ira-slide__icon" style="top:66%;left:8%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+        </svg>
+        <svg class="ira-slide__icon" style="top:26%;left:44%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+        <svg class="ira-slide__icon" style="top:72%;left:48%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/>
+        </svg>
+      </div>
       <div class="ira-wrap ira-slide__inner">
         <div class="ira-slide__panel">
-          <span class="ira-slide__index">02</span>
           <h2 class="ira-slide__title">Évaluation d'impact &amp; suivi-évaluation</h2>
           <p class="ira-slide__desc">Mesurer ce qui fonctionne réellement, et pourquoi.</p>
           <a href="/expertises/" class="ira-slide__cta">
@@ -712,18 +788,69 @@ a   { color: inherit; text-decoration: none; }
     </article>
 
     <!-- ---------- SLIDE 3 ---------- -->
-    <article class="ira-slide" role="group" aria-roledescription="diapositive" aria-label="3 sur 3">
+    <article class="ira-slide" role="group" aria-roledescription="diapositive" aria-label="3 sur 4">
       <div class="ira-slide__bg">
         <img src="/images/slider/formation.jpg" alt="Formation et renforcement des capacités" loading="lazy" width="1920" height="1080">
       </div>
       <div class="ira-slide__scrim" aria-hidden="true"></div>
+      <div class="ira-slide__icons" aria-hidden="true">
+        <svg class="ira-slide__icon" style="top:14%;left:6%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <svg class="ira-slide__icon" style="top:38%;left:22%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="8" width="3" height="10"/><rect x="17" y="5" width="3" height="13"/>
+        </svg>
+        <svg class="ira-slide__icon" style="top:66%;left:8%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+        </svg>
+        <svg class="ira-slide__icon" style="top:26%;left:44%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+        <svg class="ira-slide__icon" style="top:72%;left:48%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/>
+        </svg>
+      </div>
       <div class="ira-wrap ira-slide__inner">
         <div class="ira-slide__panel">
-          <span class="ira-slide__index">03</span>
           <h2 class="ira-slide__title">Formation &amp; renforcement des capacités</h2>
           <p class="ira-slide__desc">Transférer nos méthodes aux équipes de nos partenaires.</p>
           <a href="/expertises/" class="ira-slide__cta">
             Découvrir
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- ---------- SLIDE 4 — RÉVÉLATION + CTA LARGE ---------- -->
+    <article class="ira-slide" role="group" aria-roledescription="diapositive" aria-label="4 sur 4">
+      <div class="ira-slide__bg">
+        <img src="/images/slider/preuves.jpg" alt="Des preuves solides pour vos décisions" loading="lazy" width="1920" height="1080">
+      </div>
+      <div class="ira-slide__scrim" aria-hidden="true"></div>
+      <div class="ira-slide__icons" aria-hidden="true">
+        <svg class="ira-slide__icon" style="top:14%;left:6%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <svg class="ira-slide__icon" style="top:38%;left:22%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="8" width="3" height="10"/><rect x="17" y="5" width="3" height="13"/>
+        </svg>
+        <svg class="ira-slide__icon" style="top:66%;left:8%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+        </svg>
+        <svg class="ira-slide__icon" style="top:26%;left:44%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+        <svg class="ira-slide__icon" style="top:72%;left:48%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/>
+        </svg>
+      </div>
+      <div class="ira-wrap ira-slide__inner">
+        <div class="ira-slide__panel">
+          <h2 class="ira-slide__title">Des preuves solides pour vos décisions qui comptent</h2>
+          <p class="ira-slide__desc">Une approche rigoureuse pour éclairer chaque choix stratégique.</p>
+          <a href="/expertises/" class="ira-slide__cta ira-slide__cta--wide">
+            Découvrir nos expertises
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
         </div>
@@ -737,6 +864,7 @@ a   { color: inherit; text-decoration: none; }
     <button class="ira-slider__dot is-active" type="button" role="tab" aria-selected="true"  aria-label="Diapositive 1"></button>
     <button class="ira-slider__dot"           type="button" role="tab" aria-selected="false" aria-label="Diapositive 2"></button>
     <button class="ira-slider__dot"           type="button" role="tab" aria-selected="false" aria-label="Diapositive 3"></button>
+    <button class="ira-slider__dot"           type="button" role="tab" aria-selected="false" aria-label="Diapositive 4"></button>
   </div>
 
   <!-- flèches -->
