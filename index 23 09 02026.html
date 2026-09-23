@@ -108,268 +108,117 @@ a   { color: inherit; text-decoration: none; }
 }
 
 /* =========================================================
-   HERO — SLIDER
+   HERO
    ========================================================= */
-.ira-slider{
+.ira-hero{
+  display: flex;
+  justify-content: center;
+  padding:
+    clamp(40px, 7vw, 110px)
+    clamp(16px, 4vw, 40px)
+    clamp(110px, 13vw, 180px);
+}
+
+.ira-hero__stage{
+  container-type: inline-size;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0;
+  width: min(100%, 900px);
+}
+
+.ira-hero__col{
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.ira-hero__col--left{
+  flex: 0 0 37.8%;
+  gap: .45em;
+  transform: translateY(clamp(28px, 6.6cqw, 60px));
+}
+
+.ira-hero__col--right{
+  flex: 1 1 auto;
+  gap: .65em;
+}
+
+.ira-shot{
   position: relative;
-  height: clamp(560px, 86vh, 860px);
-  background: var(--night);
+  margin: 0;
   overflow: hidden;
-  isolation: isolate;
-}
-.ira-slider:focus-visible{
-  outline: 2px solid var(--green);
-  outline-offset: -4px;
+  background: #e6e1d8;
 }
 
-.ira-slider__viewport{
-  position: absolute;
-  inset: 0;
-}
-
-/* --- une diapositive --- */
-.ira-slide{
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 1s ease, visibility 1s ease;
-}
-.ira-slide.is-active{
-  opacity: 1;
-  visibility: visible;
-  z-index: 2;
-}
-
-.ira-slide__bg{
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-}
-.ira-slide__bg img{
+.ira-shot img{
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
-  transform: scale(1);
-  will-change: transform;
-}
-.ira-slide.is-active .ira-slide__bg img{
-  animation: iraKenBurns 9s ease-out forwards;
-}
-@keyframes iraKenBurns{
-  from { transform: scale(1.09); }
-  to   { transform: scale(1); }
 }
 
-/* --- overlay : uniquement sur la zone de texte --- */
-.ira-slide__scrim{
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: min(62%, 780px);
-  pointer-events: none;
-  background: linear-gradient(
-    90deg,
-    rgba(8, 17, 36, .95) 0%,
-    rgba(8, 17, 36, .90) 52%,
-    rgba(8, 17, 36, .58) 80%,
-    rgba(8, 17, 36, 0)  100%
-  );
+.ira-shot--left{
+  width: 100%;
+  aspect-ratio: 1432 / 1920;
+  border-radius: 3px 0 0 3px;
 }
-/* léger dégradé bas pour la lisibilité des flèches */
-.ira-slide__scrim::after{
+
+.ira-shot--left::after{
   content: "";
   position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 180px;
-  background: linear-gradient(to top, rgba(8,17,36,.45), rgba(8,17,36,0));
+  top: 0; right: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    rgba(44, 122, 62, 0)    0%,
+    rgba(44, 122, 62, .85) 32%,
+    var(--green)          100%
+  );
+  pointer-events: none;
 }
 
-/* --- contenu --- */
-.ira-slide__inner{
-  position: relative;
-  z-index: 3;
-  height: 100%;
-  display: flex;
-  align-items: center;
+.ira-shot--right{
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 0 3px 3px 0;
 }
 
-.ira-slide__panel{
-  max-width: 620px;
-  text-align: left;      /* ← texte à gauche */
-  color: #fff;
-}
-
-.ira-slide__index{
-  display: inline-flex;
-  align-items: center;
-  gap: 1rem;
+.ira-line{
+  margin: 0;
   font-family: "DM Serif Display", serif;
   font-weight: 400;
-  font-size: clamp(1.9rem, 3.4vw, 2.9rem);
-  line-height: 1;
-  letter-spacing: .02em;
-  color: #8fd49e;
-  margin-bottom: 1.1rem;
-}
-.ira-slide__index::after{
-  content: "";
-  width: 64px;
-  height: 1px;
-  background: rgba(255,255,255,.4);
-}
-
-.ira-slide__title{
-  font-family: "Lexend", sans-serif;
-  font-weight: 600;
-  font-size: clamp(1.6rem, 3.5vw, 2.85rem);
+  font-style: normal;
+  color: #000000;
   line-height: 1.12;
-  letter-spacing: -.02em;
-  color: #fff;
-  margin: 0 0 1rem;
+  letter-spacing: 0;
+  font-size: clamp(22.7px, 4.1cqw, 38.9px);
 }
 
-.ira-slide__desc{
-  font-family: "Lexend", sans-serif;
-  font-weight: 300;
-  font-size: clamp(1rem, 1.35vw, 1.15rem);
-  line-height: 1.6;
-  color: rgba(255,255,255,.82);
-  margin: 0 0 2rem;
-  max-width: 46ch;
+.ira-line--bottom{
+  color: var(--ira-green);
+  padding-left: 0.6em;
 }
 
-.ira-slide__cta{
-  display: inline-flex;
-  align-items: center;
-  gap: .6rem;
-  font-family: "Lexend", sans-serif;
-  font-weight: 500;
-  font-size: .95rem;
-  color: #fff;
-  padding-bottom: .3rem;
-  border-bottom: 1.5px solid var(--green);
-  transition: gap .25s ease, color .25s ease, border-color .25s ease;
-}
-.ira-slide__cta:hover{
-  gap: 1rem;
-  color: #8fd49e;
-  border-color: #8fd49e;
-}
-.ira-slide__cta svg{ width: 15px; height: 15px; }
-
-/* --- contrôles --- */
-.ira-slider__nav{
-  position: absolute;
-  z-index: 5;
-  right: max(20px, calc((100% - var(--ira-max)) / 2));
-  bottom: clamp(30px, 5vw, 56px);
-  display: flex;
-  gap: .7rem;
-}
-
-.ira-slider__arrow{
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  cursor: pointer;
-  color: #fff;
-  border: 1.5px solid rgba(255,255,255,.5);
-  background: rgba(10, 22, 45, .35);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
-}
-.ira-slider__arrow:hover{
-  background: #fff;
-  color: var(--night);
-  border-color: #fff;
-  transform: translateY(-2px);
-}
-.ira-slider__arrow:focus-visible{
-  outline: 2px solid #fff;
-  outline-offset: 3px;
-}
-.ira-slider__arrow svg{ width: 18px; height: 18px; }
-
-.ira-slider__dots{
-  position: absolute;
-  z-index: 5;
-  left: max(20px, calc((100% - var(--ira-max)) / 2));
-  bottom: clamp(42px, 6vw, 68px);
-  display: flex;
-  align-items: center;
-  gap: .55rem;
-}
-
-.ira-slider__dot{
-  width: 34px;
-  height: 3px;
-  padding: 0;
-  border: 0;
-  border-radius: 99px;
-  cursor: pointer;
-  background: rgba(255,255,255,.35);
-  transition: background .3s ease, width .3s ease;
-}
-.ira-slider__dot:hover{ background: rgba(255,255,255,.7); }
-.ira-slider__dot.is-active{ background: #fff; width: 58px; }
-.ira-slider__dot:focus-visible{
-  outline: 2px solid #fff;
-  outline-offset: 4px;
-}
-
-/* --- responsive --- */
-@media (max-width: 820px){
-  .ira-slider{
-    height: 88vh;
-    min-height: 640px;
-  }
-  .ira-slide__scrim{
-    inset: auto 0 0 0;
-    width: 100%;
-    height: 80%;
+@media (max-width: 720px){
+  .ira-hero__stage{ flex-direction: column; align-items: stretch; }
+  .ira-hero__col--left,
+  .ira-hero__col--right{ flex: 0 0 auto; width: 100%; }
+  .ira-hero__col--left{ transform: none; }
+  .ira-shot--left{ aspect-ratio: 4 / 5; border-radius: 3px 3px 0 0; }
+  .ira-shot--left::after{
+    top: auto; left: 0; right: 0; bottom: 0;
+    width: auto; height: 2px;
     background: linear-gradient(
-      180deg,
-      rgba(8,17,36,0)   0%,
-      rgba(8,17,36,.72) 42%,
-      rgba(8,17,36,.96) 100%
+      to right,
+      rgba(44, 122, 62, 0)    0%,
+      rgba(44, 122, 62, .85) 60%,
+      var(--green)          100%
     );
   }
-  .ira-slide__scrim::after{ display: none; }
-  .ira-slide__inner{
-    align-items: flex-end;
-    padding-top: 90px;
-    padding-bottom: 150px;
-  }
-  .ira-slide__panel{ max-width: 100%; }
-  .ira-slide__index::after{ width: 44px; }
-  .ira-slider__nav{
-    right: 20px;
-    bottom: 22px;
-  }
-  .ira-slider__arrow{ width: 46px; height: 46px; }
-  .ira-slider__dots{
-    left: 20px;
-    bottom: 40px;
-  }
-}
-
-@media (max-width: 420px){
-  .ira-slide__title{ font-size: 1.45rem; }
-  .ira-slide__desc{ font-size: .95rem; }
-}
-
-@media (prefers-reduced-motion: reduce){
-  .ira-slide,
-  .ira-slide__bg img,
-  .ira-slider__arrow,
-  .ira-slider__dot{ transition: none !important; }
-  .ira-slide.is-active .ira-slide__bg img{ animation: none; }
+  .ira-shot--right{ border-radius: 0 0 3px 3px; }
+  .ira-line{ font-size: clamp(27px, 8vw, 38.9px); }
 }
 
 /* =========================================================
@@ -462,12 +311,14 @@ a   { color: inherit; text-decoration: none; }
   border-top: 1px solid var(--ira-line);
 }
 
+/* Visuel d'ouverture de la section Expertises
+   → l'image entière reste visible, hauteur max ~350px desktop / 250px mobile */
 .ira-expertise__figure{
   margin: 0 0 clamp(2.5rem, 5vw, 4rem);
   border-radius: var(--ira-radius);
   overflow: hidden;
   background: #e6e1d8;
-  max-height: 350px;
+  max-height: 350px;              /* plafond desktop */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -475,15 +326,19 @@ a   { color: inherit; text-decoration: none; }
 .ira-expertise__figure img{
   display: block;
   max-width: 100%;
-  max-height: 350px;
+  max-height: 350px;              /* l'image ne dépasse jamais 350px de haut */
   width: auto;
   height: auto;
-  object-fit: contain;
+  object-fit: contain;            /* préserve l'intégralité de la photo */
 }
 
 @media (max-width: 720px){
-  .ira-expertise__figure{ max-height: 250px; }
-  .ira-expertise__figure img{ max-height: 250px; }
+  .ira-expertise__figure{
+    max-height: 250px;
+  }
+  .ira-expertise__figure img{
+    max-height: 250px;
+  }
 }
 
 .ira-expertise__head{
@@ -662,93 +517,22 @@ a   { color: inherit; text-decoration: none; }
 <!-- HEADER -->
 <div id="site-header"></div>
 
-<!-- =========================================================
-     HERO — SLIDER
-     ========================================================= -->
-<section class="ira-slider"
-         id="hero"
-         tabindex="0"
-         aria-roledescription="carrousel"
-         aria-label="Nos domaines d'intervention">
-
-  <div class="ira-slider__viewport">
-
-    <!-- ---------- SLIDE 1 ---------- -->
-    <article class="ira-slide is-active" role="group" aria-roledescription="diapositive" aria-label="1 sur 3">
-      <div class="ira-slide__bg">
-        <img src="/images/slider/recherche.jpg" alt="Recherche appliquée et analyse socio-économique" width="1920" height="1080">
-      </div>
-      <div class="ira-slide__scrim" aria-hidden="true"></div>
-      <div class="ira-wrap ira-slide__inner">
-        <div class="ira-slide__panel">
-          <span class="ira-slide__index">01</span>
-          <h2 class="ira-slide__title">Recherche appliquée &amp; analyse socio-économique</h2>
-          <p class="ira-slide__desc">Comprendre une réalité sociale ou économique pour éclairer une décision.</p>
-          <a href="/expertises/" class="ira-slide__cta">
-            Découvrir
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <!-- ---------- SLIDE 2 ---------- -->
-    <article class="ira-slide" role="group" aria-roledescription="diapositive" aria-label="2 sur 3">
-      <div class="ira-slide__bg">
-        <img src="/images/slider/suivi.jpg" alt="Évaluation d'impact et suivi-évaluation" loading="lazy" width="1920" height="1080">
-      </div>
-      <div class="ira-slide__scrim" aria-hidden="true"></div>
-      <div class="ira-wrap ira-slide__inner">
-        <div class="ira-slide__panel">
-          <span class="ira-slide__index">02</span>
-          <h2 class="ira-slide__title">Évaluation d'impact &amp; suivi-évaluation</h2>
-          <p class="ira-slide__desc">Mesurer ce qui fonctionne réellement, et pourquoi.</p>
-          <a href="/expertises/" class="ira-slide__cta">
-            Découvrir
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <!-- ---------- SLIDE 3 ---------- -->
-    <article class="ira-slide" role="group" aria-roledescription="diapositive" aria-label="3 sur 3">
-      <div class="ira-slide__bg">
-        <img src="/images/slider/formation.jpg" alt="Formation et renforcement des capacités" loading="lazy" width="1920" height="1080">
-      </div>
-      <div class="ira-slide__scrim" aria-hidden="true"></div>
-      <div class="ira-wrap ira-slide__inner">
-        <div class="ira-slide__panel">
-          <span class="ira-slide__index">03</span>
-          <h2 class="ira-slide__title">Formation &amp; renforcement des capacités</h2>
-          <p class="ira-slide__desc">Transférer nos méthodes aux équipes de nos partenaires.</p>
-          <a href="/expertises/" class="ira-slide__cta">
-            Découvrir
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-        </div>
-      </div>
-    </article>
-
+<!-- HERO -->
+<section class="ira-hero">
+  <div class="ira-hero__stage">
+    <div class="ira-hero__col ira-hero__col--left">
+      <p class="ira-line dm-serif-display-regular">Des preuves solides</p>
+      <figure class="ira-shot ira-shot--left">
+        <img src="/images/woman-engineer.jpg" alt="Ingénieure IRA sur le terrain" width="1432" height="1920">
+      </figure>
+    </div>
+    <div class="ira-hero__col ira-hero__col--right">
+      <figure class="ira-shot ira-shot--right">
+        <img src="/images/workers-implementation.jpg" alt="Équipe de mise en œuvre sur le terrain">
+      </figure>
+      <p class="ira-line ira-line--bottom dm-serif-display-regular">pour des décisions qui comptent.</p>
+    </div>
   </div>
-
-  <!-- puces de navigation -->
-  <div class="ira-slider__dots" role="tablist" aria-label="Choisir une diapositive">
-    <button class="ira-slider__dot is-active" type="button" role="tab" aria-selected="true"  aria-label="Diapositive 1"></button>
-    <button class="ira-slider__dot"           type="button" role="tab" aria-selected="false" aria-label="Diapositive 2"></button>
-    <button class="ira-slider__dot"           type="button" role="tab" aria-selected="false" aria-label="Diapositive 3"></button>
-  </div>
-
-  <!-- flèches -->
-  <div class="ira-slider__nav">
-    <button class="ira-slider__arrow" type="button" data-slider-prev aria-label="Diapositive précédente">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-    </button>
-    <button class="ira-slider__arrow" type="button" data-slider-next aria-label="Diapositive suivante">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-    </button>
-  </div>
-
 </section>
 
 <!-- 2.1 — OUVERTURE -->
@@ -828,6 +612,7 @@ a   { color: inherit; text-decoration: none; }
 <section class="ira-expertise" id="expertises">
   <div class="ira-wrap">
 
+    <!-- Visuel d'ouverture de la section (image entière visible, hauteur max 350px desktop) -->
     <figure class="ira-expertise__figure">
       <img src="/images/women-working.jpg"
            alt="Équipe IRA au travail"
@@ -967,122 +752,18 @@ a   { color: inherit; text-decoration: none; }
 <div id="site-footer"></div>
 
 <script>
-/* =========================================================
-   INJECTION HEADER + FOOTER
-   ========================================================= */
-document.addEventListener("DOMContentLoaded", function () {
-  fetch("/components/header.html")
-    .then(function (r) { return r.ok ? r.text() : ""; })
-    .then(function (html) { if (html) document.getElementById("site-header").innerHTML = html; })
-    .catch(function () {});
+  /* Injection header + footer */
+  document.addEventListener("DOMContentLoaded", function () {
+    fetch("/components/header.html")
+      .then(function (r) { return r.ok ? r.text() : ""; })
+      .then(function (html) { if (html) document.getElementById("site-header").innerHTML = html; })
+      .catch(function () {});
 
-  fetch("/components/footer.html")
-    .then(function (r) { return r.ok ? r.text() : ""; })
-    .then(function (html) { if (html) document.getElementById("site-footer").innerHTML = html; })
-    .catch(function () {});
-});
-
-/* =========================================================
-   SLIDER HERO
-   ========================================================= */
-(function () {
-  var slider = document.querySelector(".ira-slider");
-  if (!slider) return;
-
-  var slides = Array.prototype.slice.call(slider.querySelectorAll(".ira-slide"));
-  var dots   = Array.prototype.slice.call(slider.querySelectorAll(".ira-slider__dot"));
-  var btnPrev = slider.querySelector("[data-slider-prev]");
-  var btnNext = slider.querySelector("[data-slider-next]");
-  if (slides.length < 2) return;
-
-  var DURATION = 7000;         // temps entre deux diapositives (ms)
-  var index = 0;
-  var timer = null;
-  var paused = false;
-
-  function render() {
-    slides.forEach(function (slide, i) {
-      slide.classList.toggle("is-active", i === index);
-    });
-    dots.forEach(function (dot, i) {
-      var active = i === index;
-      dot.classList.toggle("is-active", active);
-      dot.setAttribute("aria-selected", active ? "true" : "false");
-    });
-  }
-
-  function goTo(i, userAction) {
-    index = (i + slides.length) % slides.length;
-    render();
-    if (userAction) restart();
-  }
-
-  function next(userAction) { goTo(index + 1, userAction); }
-  function prev(userAction) { goTo(index - 1, userAction); }
-
-  function start() {
-    stop();
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    timer = window.setInterval(function () {
-      if (!paused) next(false);
-    }, DURATION);
-  }
-  function stop() {
-    if (timer) { window.clearInterval(timer); timer = null; }
-  }
-  function restart() {
-    stop();
-    start();
-  }
-
-  /* --- boutons --- */
-  if (btnNext) btnNext.addEventListener("click", function () { next(true); });
-  if (btnPrev) btnPrev.addEventListener("click", function () { prev(true); });
-
-  /* --- puces --- */
-  dots.forEach(function (dot, i) {
-    dot.addEventListener("click", function () { goTo(i, true); });
+    fetch("/components/footer.html")
+      .then(function (r) { return r.ok ? r.text() : ""; })
+      .then(function (html) { if (html) document.getElementById("site-footer").innerHTML = html; })
+      .catch(function () {});
   });
-
-  /* --- clavier --- */
-  slider.addEventListener("keydown", function (e) {
-    if (e.key === "ArrowRight") { e.preventDefault(); next(true); }
-    if (e.key === "ArrowLeft")  { e.preventDefault(); prev(true); }
-  });
-
-  /* --- pause au survol / focus --- */
-  slider.addEventListener("mouseenter", function () { paused = true; });
-  slider.addEventListener("mouseleave", function () { paused = false; });
-  slider.addEventListener("focusin",    function () { paused = true; });
-  slider.addEventListener("focusout",   function () { paused = false; });
-
-  /* --- pause si l'onglet est masqué --- */
-  document.addEventListener("visibilitychange", function () {
-    paused = document.hidden;
-  });
-
-  /* --- balayage tactile --- */
-  var startX = 0, startY = 0, tracking = false;
-  slider.addEventListener("touchstart", function (e) {
-    var t = e.changedTouches[0];
-    startX = t.clientX; startY = t.clientY; tracking = true;
-  }, { passive: true });
-
-  slider.addEventListener("touchend", function (e) {
-    if (!tracking) return;
-    tracking = false;
-    var t = e.changedTouches[0];
-    var dx = t.clientX - startX;
-    var dy = t.clientY - startY;
-    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
-      if (dx < 0) next(true); else prev(true);
-    }
-  }, { passive: true });
-
-  /* --- démarrage --- */
-  render();
-  start();
-})();
 </script>
 
 </body>
